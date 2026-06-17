@@ -16,7 +16,8 @@ export function CatalogueSort({ sortBy, searchValue, onChange }: Props) {
       <select value={sortBy} onChange={(e) => onChange(e.target.value)}>
         {showRelevance && <option value="relevance">{labels.software.sort_by_relevance}</option>}
         <option value="release_date">{labels.software.sort_by_release_date}</option>
-        <option value="vitality">{labels.software.sort_by_vitality}</option>
+        {/* TODO: re-enable when vitalityScore sorting is fixed on the API side */}
+        {/* <option value="vitality">{labels.software.sort_by_vitality}</option> */}
         <option value="name">{labels.software.sort_by_alphabetic}</option>
       </select>
     </div>

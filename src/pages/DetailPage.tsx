@@ -22,6 +22,24 @@ function getDescription(detail: SoftwareDetail) {
   return descs[keys[0]] ?? null;
 }
 
+function resolveUrl(url: string, repoUrl?: string): string {
+  if (!url || /^https?:\/\//.test(url)) return url;
+  if (!repoUrl) return url;
+  try {
+    const repo = new URL(repoUrl);
+    const hostname = repo.hostname;
+    if (hostname === 'github.com') {
+      return `https://raw.githubusercontent.com${repo.pathname}/HEAD/${url}`;
+    }
+    if (hostname === 'bitbucket.org') {
+      return `https://bitbucket.org${repo.pathname}/raw/HEAD/${url}`;
+    }
+    return `${repo.protocol}//${hostname}${repo.pathname}/-/raw/HEAD/${url}`;
+  } catch {
+    return url;
+  }
+}
+
 function isReuse(detail: SoftwareDetail): boolean {
   return !!(
     detail.publiccode.organisation?.uri ||
