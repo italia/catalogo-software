@@ -87,7 +87,8 @@ export function DetailPage() {
     category === SOFTWARE_REUSE
       ? '/assets/images/cover_softwareriuso.png'
       : '/assets/images/cover_software_opensource.png';
-  let logo = desc?.screenshots?.[0] ?? detail.publiccode.logo ?? fallback;
+  const repoUrl = detail.publiccode.url;
+  let logo = resolveUrl(desc?.screenshots?.[0] ?? detail.publiccode.logo ?? fallback, repoUrl);
   if (/github/.test(logo) && /\.svg$/.test(logo)) {
     logo += '?sanitize=true';
   }
@@ -112,7 +113,7 @@ export function DetailPage() {
   const longDescription = desc?.longDescription;
   const apiDocumentation = desc?.apiDocumentation;
   const landingURL = detail.publiccode.landingURL;
-  const codeURL = detail.publiccode.url;
+  const codeURL = repoUrl;
   const docURL = desc?.documentation;
   const availableLanguages = detail.publiccode.localisation?.availableLanguages;
   const localisationReady = detail.publiccode.localisation?.localisationReady;
@@ -176,7 +177,12 @@ export function DetailPage() {
               <div className="row g-2">
                 {desc.screenshots.slice(1, 5).map((src, i) => (
                   <div key={i} className="col-6">
-                    <img src={src} alt={`Screenshot ${i + 2}`} className="img-fluid rounded" />
+                    <img
+                      src={resolveUrl(src, repoUrl)}
+                      alt={`Screenshot ${i + 2}`}
+                      className="img-fluid rounded"
+                      style={{ width: 240, height: 240, objectFit: 'cover' }}
+                    />
                   </div>
                 ))}
               </div>
