@@ -1,0 +1,26 @@
+{
+  "name": "catalogo-software",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 3000",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-markdown": "^10.1.0",
+    "react-router-dom": "^7.18.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "@vitejs/plugin-react": "^3.1.0",
+    "bootstrap-italia": "^3.0.0-beta.1",
+    "sass": "^1.101.0",
+    "typescript": "^4.9.3",
+    "vite": "^4.2.0"
+  }
+}
