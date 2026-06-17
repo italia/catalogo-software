@@ -26,10 +26,10 @@ async function executeQuery(query: object, sort: object, from: number, size: num
     };
   }
 
-  const response = await fetch(`${ES_URL}/${ES_INDEX}/_search`, {
+  const response = await fetch(`${ES_URL}/${ES_INDEX}/_search?preference=${preference}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ query, sort, from, size, preference }),
+    body: JSON.stringify({ query, sort, from, size }),
   });
 
   if (!response.ok) {
