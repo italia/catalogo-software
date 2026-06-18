@@ -9,6 +9,8 @@ import { ImageWithPlaceholder } from '../components/ImageWithPlaceholder';
 import Markdown from 'react-markdown';
 import { labels, developmentStatusLabels, categoryLabels, scopeLabels } from '../utils/i18n';
 
+// ─── helpers ────────────────────────────────────────────────────────────────
+
 function getDescription(detail: SoftwareDetail) {
   const descs = detail.publiccode.description;
   if (!descs) return null;
@@ -28,12 +30,10 @@ function resolveUrl(url: string, repoUrl?: string): string {
   try {
     const repo = new URL(repoUrl);
     const hostname = repo.hostname;
-    if (hostname === 'github.com') {
+    if (hostname === 'github.com')
       return `https://raw.githubusercontent.com${repo.pathname}/HEAD/${url}`;
-    }
-    if (hostname === 'bitbucket.org') {
+    if (hostname === 'bitbucket.org')
       return `https://bitbucket.org${repo.pathname}/raw/HEAD/${url}`;
-    }
     return `${repo.protocol}//${hostname}${repo.pathname}/-/raw/HEAD/${url}`;
   } catch {
     return url;
@@ -48,16 +48,95 @@ function isReuse(detail: SoftwareDetail): boolean {
   );
 }
 
+// ─── sub-components ─────────────────────────────────────────────────────────
+
+/** Small icon SVG paths reusing the same set as developers.italia.it */
+const Icons = {
+  link: (
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71" />
+      <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71" />
+    </svg>
+  ),
+  docs: (
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+      <polyline points="14 2 14 8 20 8" />
+      <line x1="16" y1="13" x2="8" y2="13" />
+      <line x1="16" y1="17" x2="8" y2="17" />
+      <polyline points="10 9 9 9 8 9" />
+    </svg>
+  ),
+  code: (
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <polyline points="16 18 22 12 16 6" />
+      <polyline points="8 6 2 12 8 18" />
+    </svg>
+  ),
+  api: (
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+      <line x1="8" y1="21" x2="16" y2="21" />
+      <line x1="12" y1="17" x2="12" y2="21" />
+    </svg>
+  ),
+  roadmap: (
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+    </svg>
+  ),
+  check: (
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <polyline points="20 6 9 17 4 12" />
+    </svg>
+  ),
+};
+
+interface ActionLinkProps {
+  href: string;
+  icon: React.ReactNode;
+  label: string;
+}
+function ActionLink({ href, icon, label }: ActionLinkProps) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="di-action-link"
+    >
+      <span className="di-action-link__icon">{icon}</span>
+      <span className="di-action-link__label">{label}</span>
+      <span className="di-action-link__arrow" aria-hidden="true">→</span>
+    </a>
+  );
+}
+
+interface MetaRowProps {
+  label: string;
+  value: React.ReactNode;
+}
+function MetaRow({ label, value }: MetaRowProps) {
+  return (
+    <div className="di-meta-row">
+      <dt className="di-meta-row__label">{label}</dt>
+      <dd className="di-meta-row__value">{value}</dd>
+    </div>
+  );
+}
+
+// ─── main component ──────────────────────────────────────────────────────────
+
 export function DetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const [detail, setDetail] = useState<SoftwareDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [activeScreenshot, setActiveScreenshot] = useState(0);
 
   useEffect(() => {
     if (!slug) return;
     let cancelled = false;
-
     async function load() {
       setLoading(true);
       setError(null);
@@ -71,7 +150,6 @@ export function DetailPage() {
       }
       setLoading(false);
     }
-
     load();
     return () => { cancelled = true; };
   }, [slug]);
@@ -88,11 +166,15 @@ export function DetailPage() {
       ? '/assets/images/cover_softwareriuso.png'
       : '/assets/images/cover_software_opensource.png';
   const repoUrl = detail.publiccode.url;
-  let logo = resolveUrl(desc?.screenshots?.[0] ?? detail.publiccode.logo ?? fallback, repoUrl);
-  if (/github/.test(logo) && /\.svg$/.test(logo)) {
-    logo += '?sanitize=true';
-  }
 
+  // logo is the first item; screenshots (index 0+) go into the carousel
+  const logoRaw = detail.publiccode.logo ?? fallback;
+  let logo = resolveUrl(logoRaw, repoUrl);
+  if (/github/.test(logo) && /\.svg$/.test(logo)) logo += '?sanitize=true';
+
+  const allScreenshots = (desc?.screenshots ?? []).map((s) => resolveUrl(s, repoUrl));
+
+  // derived fields
   const repoOwner = detail.publiccode.legal?.repoOwner;
   const mainCopyrightOwner = detail.publiccode.legal?.mainCopyrightOwner;
   const license = detail.publiccode.legal?.license;
@@ -101,7 +183,6 @@ export function DetailPage() {
   const contractors = detail.publiccode.maintenance?.contractors ?? [];
   const devStatus = detail.publiccode.developmentStatus;
   const releaseDate = detail.publiccode.releaseDate;
-  const softwareType = detail.publiccode.softwareType;
   const softwareVersion = detail.publiccode.softwareVersion;
   const applicationSuite = detail.publiccode.applicationSuite;
   const roadmap = detail.publiccode.roadmap;
@@ -113,7 +194,6 @@ export function DetailPage() {
   const longDescription = desc?.longDescription;
   const apiDocumentation = desc?.apiDocumentation;
   const landingURL = detail.publiccode.landingURL;
-  const codeURL = repoUrl;
   const docURL = desc?.documentation;
   const availableLanguages = detail.publiccode.localisation?.availableLanguages;
   const localisationReady = detail.publiccode.localisation?.localisationReady;
@@ -121,370 +201,390 @@ export function DetailPage() {
   const conformita = detail.publiccode.it?.conforme ?? detail.publiccode.IT?.conforme;
   const dependsOnOpen = detail.publiccode.dependsOn?.open;
   const dependsOnProprietary = detail.publiccode.dependsOn?.proprietary;
-  const publiccodeYmlVersion = detail.publiccode.publiccodeYmlVersion;
   const organisation = detail.publiccode.organisation;
   const codiceIPA = detail.publiccode.it?.riuso?.codiceIPA ?? detail.publiccode.IT?.riuso?.codiceIPA;
   const codiceIPALabel = detail['it-riuso-codiceIPA-label'];
 
+  // enabling platforms as labelled badges
+  const enablingPlatforms: string[] = [];
+  if (piattaforme?.pagopa) enablingPlatforms.push('pagoPA');
+  if (piattaforme?.spid) enablingPlatforms.push('SPID');
+  if (piattaforme?.cie) enablingPlatforms.push('CIE');
+  if (piattaforme?.anpr) enablingPlatforms.push('ANPR');
+  if (piattaforme?.io) enablingPlatforms.push('App IO');
+
+  // compliance labels
+  const complianceItems: string[] = [];
+  if (conformita?.lineeGuidaDesign) complianceItems.push('Linee Guida Design');
+  if (conformita?.misureMinimeSicurezza) complianceItems.push('Misure Minime Sicurezza');
+  if (conformita?.modelloInteroperabilita) complianceItems.push('Modello Interoperabilità');
+  if (conformita?.gdpr) complianceItems.push('GDPR');
+
   return (
-    <article className="container" style={{ marginTop: '2.5rem', marginBottom: '6rem' }}>
-      <div className="mb-4">
-        <Link to="/" className="btn btn-primary">
-          &larr; {labels.software.back_to_catalogue}
+    <>
+      {/* ── scoped styles ──────────────────────────────────────────────── */}
+
+
+      <div className="di-page">
+        {/* back */}
+        <Link to="/" className="di-back-link">
+          ← {labels.software.back_to_catalogue}
         </Link>
-      </div>
 
-      <div className="row">
-        {/* Left: image + links */}
-        <div className="col-12 col-lg-4 mb-4">
-          <div className="ratio ratio-16x9 mb-3">
-            <figure className="figure img-full">
+        <div className="di-layout">
+          {/* ── LEFT ───────────────────────────────────────────────────── */}
+          <aside className="di-left">
+            {/* logo */}
+            <div className="di-logo-card">
               <ImageWithPlaceholder placeholder={fallback} alt={'Logo ' + name} img={logo} />
-            </figure>
-          </div>
+            </div>
 
-          <div className="d-flex flex-column gap-2">
-            {landingURL && (
-              <a href={landingURL} target="_blank" rel="noopener noreferrer">
-                {labels.software.goToLandingUrl}
-              </a>
-            )}
-            {codeURL && (
-              <a href={codeURL} target="_blank" rel="noopener noreferrer">
-                {labels.software.goToCode}
-              </a>
-            )}
-            {docURL && (
-              <a href={docURL} target="_blank" rel="noopener noreferrer">
-                {labels.software.goToDocumentation}
-              </a>
-            )}
-            {apiDocumentation && (
-              <a href={apiDocumentation} target="_blank" rel="noopener noreferrer">
-                {labels.software.api_documentation}
-              </a>
-            )}
-            {roadmap && (
-              <a href={roadmap} target="_blank" rel="noopener noreferrer">
-                {labels.software.roadmap}
-              </a>
-            )}
-          </div>
-
-          {/* Screenshots gallery */}
-          {desc?.screenshots && desc.screenshots.length > 1 && (
-            <div className="mt-3">
-              <div className="row g-2">
-                {desc.screenshots.slice(1, 5).map((src, i) => (
-                  <div key={i} className="col-6">
-                    <img
-                      src={resolveUrl(src, repoUrl)}
-                      alt={`Screenshot ${i + 2}`}
-                      className="img-fluid rounded"
-                      style={{ width: 240, height: 240, objectFit: 'cover' }}
-                    />
+            {/* screenshot carousel */}
+            {allScreenshots.length > 0 && (
+              <div className="di-carousel">
+                <a href={allScreenshots[activeScreenshot]} target="_blank" rel="noopener noreferrer">
+                  <img
+                    className="di-carousel__main"
+                    src={allScreenshots[activeScreenshot]}
+                    alt={`Screenshot ${activeScreenshot + 1}`}
+                  />
+                </a>
+                {allScreenshots.length > 1 && (
+                  <div className="di-carousel__thumbs">
+                    {allScreenshots.map((src, i) => (
+                      <img
+                        key={i}
+                        src={src}
+                        alt={`Screenshot ${i + 1}`}
+                        className={`di-carousel__thumb${i === activeScreenshot ? ' di-carousel__thumb--active' : ''}`}
+                        onClick={() => setActiveScreenshot(i)}
+                      />
+                    ))}
                   </div>
-                ))}
+                )}
               </div>
+            )}
+
+            {/* action links */}
+            <div className="di-action-links">
+              {landingURL && (
+                <ActionLink href={landingURL} icon={Icons.link} label={labels.software.goToLandingUrl} />
+              )}
+              {docURL && (
+                <ActionLink href={docURL} icon={Icons.docs} label={labels.software.goToDocumentation} />
+              )}
+              {repoUrl && (
+                <ActionLink href={repoUrl} icon={Icons.code} label={labels.software.goToCode} />
+              )}
+              {apiDocumentation && (
+                <ActionLink href={apiDocumentation} icon={Icons.api} label={labels.software.api_documentation} />
+              )}
+              {roadmap && (
+                <ActionLink href={roadmap} icon={Icons.roadmap} label={labels.software.roadmap} />
+              )}
             </div>
-          )}
-        </div>
+          </aside>
 
-        {/* Right: details */}
-        <div className="col-12 col-lg-8">
-          <h1>{name}</h1>
-          {desc?.shortDescription && <p className="lead">{desc.shortDescription}</p>}
-
-          {repoOwner && (
-            <p>
-              <strong>{labels.software.published_by}:</strong> {repoOwner}
-            </p>
-          )}
-
-          {/* Key info */}
-          <div className="row mb-4">
-            {devStatus && (
-              <div className="col-6 col-md-3 mb-2">
-                <small className="text-muted d-block">{labels.software.development_status}</small>
-                <span>{developmentStatusLabels[devStatus] ?? devStatus}</span>
-              </div>
-            )}
-            {releaseDate && (
-              <div className="col-6 col-md-3 mb-2">
-                <small className="text-muted d-block">{labels.software.last_release}</small>
-                <span>{releaseDate}</span>
-              </div>
-            )}
-            {softwareVersion && (
-              <div className="col-6 col-md-3 mb-2">
-                <small className="text-muted d-block">{labels.software.software_version}</small>
-                <span>{softwareVersion}</span>
-              </div>
-            )}
-            {license && (
-              <div className="col-6 col-md-3 mb-2">
-                <small className="text-muted d-block">{labels.software.license}</small>
-                <span>{license}</span>
-              </div>
-            )}
-            {maintenanceType && (
-              <div className="col-6 col-md-3 mb-2">
-                <small className="text-muted d-block">{labels.software.maintainance_type}</small>
-                <span>{maintenanceType}</span>
-              </div>
-            )}
-            {softwareType && (
-              <div className="col-6 col-md-3 mb-2">
-                <small className="text-muted d-block">{labels.software.software_type}</small>
-                <span>{softwareType}</span>
-              </div>
-            )}
-            {applicationSuite && (
-              <div className="col-6 col-md-3 mb-2">
-                <small className="text-muted d-block">{labels.software.application_suite}</small>
-                <span>{applicationSuite}</span>
-              </div>
-            )}
-            {mainCopyrightOwner && (
-              <div className="col-6 col-md-3 mb-2">
-                <small className="text-muted d-block">{labels.software.main_copyright_owner}</small>
-                <span>{mainCopyrightOwner}</span>
-              </div>
-            )}
-            {(organisation?.name || codiceIPALabel) && (
-              <div className="col-6 col-md-3 mb-2">
-                <small className="text-muted d-block">{labels.software.managing_organisation}</small>
-                <span>{codiceIPALabel ?? organisation?.name}</span>
-              </div>
-            )}
-            {codiceIPA && (
-              <div className="col-6 col-md-3 mb-2">
-                <small className="text-muted d-block">{labels.software.codice_ipa}</small>
-                <span>{codiceIPA}</span>
-              </div>
-            )}
-            {publiccodeYmlVersion && (
-              <div className="col-6 col-md-3 mb-2">
-                <small className="text-muted d-block">{labels.software.publiccode_version}</small>
-                <span>{publiccodeYmlVersion}</span>
-              </div>
-            )}
-          </div>
-
-          {typeof detail.vitalityScore === 'number' && (
-            <div className="mb-3">
-              <small className="text-muted d-block">{labels.software.vitality}</small>
-              <div className="progress" style={{ height: 8 }}>
-                <div
-                  className="progress-bar"
-                  role="progressbar"
-                  style={{ width: `${Math.min(detail.vitalityScore, 100)}%` }}
-                />
-              </div>
-              <small>{detail.vitalityScore}%</small>
-            </div>
-          )}
-
-          {/* Features */}
-          {features.length > 0 && (
-            <div className="mb-4">
-              <h4>{labels.software.functionality}</h4>
-              <ul>
-                {features.map((f, i) => (
-                  <li key={i}><Markdown components={{ p: ({ children }) => <>{children}</> }}>{f}</Markdown></li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {/* Long description */}
-          {longDescription && (
-            <div className="mb-4">
-              <h4>{labels.software.extende_description}</h4>
-              <Markdown>{longDescription}</Markdown>
-            </div>
-          )}
-
-          {/* Contacts */}
-          {contacts.length > 0 && (
-            <div className="mb-4">
-              <h4>
-                {contacts.length === 1
-                  ? labels.software.technical_contact
-                  : labels.software.technical_contacts}
-              </h4>
-              {contacts.map((c, i) => (
-                <div key={i} className="mb-2">
-                  <span>{c.name}</span>
-                  {c.affiliation && (
-                    <span className="text-muted"> — {c.affiliation}</span>
-                  )}
-                  {c.email && (
-                    <>
-                      {' - '}
-                      <a href={`mailto:${c.email}`}>{c.email}</a>
-                    </>
-                  )}
-                  {c.phone && (
-                    <>
-                      {' - '}
-                      <a href={`tel:${c.phone}`}>{c.phone}</a>
-                    </>
-                  )}
+          {/* ── RIGHT ──────────────────────────────────────────────────── */}
+          <main className="di-right">
+            {/* hero */}
+            <div>
+              {/* category chips */}
+              {categories && categories.length > 0 && (
+                <div className="di-hero__category">
+                  {categories.map((cat, i) => (
+                    <span key={cat}>
+                      {i > 0 && <span style={{ color: '#aaa', margin: '0 .2rem' }}>·</span>}
+                      <span>{categoryLabels[cat] ?? cat}</span>
+                    </span>
+                  ))}
                 </div>
-              ))}
-            </div>
-          )}
+              )}
 
-          {/* Languages */}
-          {availableLanguages && availableLanguages.length > 0 && (
-            <div className="mb-4">
-              <h4>{labels.software.supported_languages}</h4>
-              <p>{availableLanguages.join(', ')}</p>
-            </div>
-          )}
+              <h1 className="di-hero__title">
+                {name}
+                {softwareVersion && (
+                  <span className="di-hero__version">{softwareVersion}</span>
+                )}
+              </h1>
 
-          {/* Localisation ready */}
-          {typeof localisationReady === 'boolean' && (
-            <div className="mb-4">
-              <h4>{labels.software.localisation_ready}</h4>
-              <p>{localisationReady ? labels.software.localisation_ready_yes : labels.software.localisation_ready_no}</p>
-            </div>
-          )}
+              {desc?.shortDescription && (
+                <p className="di-hero__subtitle">{desc.shortDescription}</p>
+              )}
 
-          {/* Categories */}
-          {categories && categories.length > 0 && (
-            <div className="mb-4">
-              <h4>{labels.software.categories}</h4>
-              <div className="d-flex flex-wrap gap-2">
-                {categories.map((cat) => (
-                  <span key={cat} className="badge bg-secondary">
-                    {categoryLabels[cat] ?? cat}
+              {(repoOwner || codiceIPALabel || organisation?.name) && (
+                <p className="di-hero__publisher">
+                  {labels.software.published_by}{' '}
+                  <strong>{codiceIPALabel ?? organisation?.name ?? repoOwner}</strong>
+                </p>
+              )}
+
+              {devStatus && (
+                <div>
+                  <span className="di-status">
+                    {labels.software.development_status}:{' '}
+                    {developmentStatusLabels[devStatus] ?? devStatus}
                   </span>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Intended audience */}
-          {intendedAudience?.scope && intendedAudience.scope.length > 0 && (
-            <div className="mb-4">
-              <h4>{labels.software.intended_audience}</h4>
-              <div className="d-flex flex-wrap gap-2">
-                {intendedAudience.scope.map((s) => (
-                  <span key={s} className="badge bg-secondary">
-                    {scopeLabels[s] ?? s}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Platforms */}
-          {deployPlatforms && deployPlatforms.length > 0 && (
-            <div className="mb-4">
-              <h4>{labels.software.platforms}</h4>
-              <div className="d-flex flex-wrap gap-2">
-                {deployPlatforms.map((p) => (
-                  <span key={p} className="badge bg-info text-dark">{p}</span>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Enabling platforms */}
-          {piattaforme && (
-            <div className="mb-4">
-              <h4>{labels.software.enabling_platforms}</h4>
-              <div className="d-flex flex-wrap gap-2">
-                {piattaforme.spid && <span className="badge bg-primary">SPID</span>}
-                {piattaforme.cie && <span className="badge bg-primary">CIE</span>}
-                {piattaforme.anpr && <span className="badge bg-primary">ANPR</span>}
-                {piattaforme.pagopa && <span className="badge bg-primary">pagoPA</span>}
-                {piattaforme.io && <span className="badge bg-primary">App IO</span>}
-              </div>
-            </div>
-          )}
-
-          {/* Compliance */}
-          {conformita && (
-            <div className="mb-4">
-              <h4>{labels.software.compliance}</h4>
-              <div className="d-flex flex-wrap gap-2">
-                {conformita.lineeGuidaDesign && <span className="badge bg-success">Linee Guida Design</span>}
-                {conformita.misureMinimeSicurezza && <span className="badge bg-success">Misure Minime Sicurezza</span>}
-                {conformita.modelloInteroperabilita && <span className="badge bg-success">Modello Interoperabilità</span>}
-                {conformita.gdpr && <span className="badge bg-success">GDPR</span>}
-              </div>
-            </div>
-          )}
-
-          {/* Dependencies */}
-          {dependsOnOpen && dependsOnOpen.length > 0 && (
-            <div className="mb-4">
-              <h4>{labels.software.dependencies_open}</h4>
-              <ul className="list-unstyled">
-                {dependsOnOpen.map((dep, i) => (
-                  <li key={i}>
-                    <strong>{dep.name}</strong>
-                    {dep.version && <span> {dep.version}</span>}
-                    {!dep.version && dep.versionMin && <span> &ge; {dep.versionMin}</span>}
-                    {dep.versionMax && <span> &le; {dep.versionMax}</span>}
-                    {dep.optional && <span className="text-muted"> ({labels.software.optional})</span>}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-          {dependsOnProprietary && dependsOnProprietary.length > 0 && (
-            <div className="mb-4">
-              <h4>{labels.software.dependencies_proprietary}</h4>
-              <ul className="list-unstyled">
-                {dependsOnProprietary.map((dep, i) => (
-                  <li key={i}>
-                    <strong>{dep.name}</strong>
-                    {dep.version && <span> {dep.version}</span>}
-                    {!dep.version && dep.versionMin && <span> &ge; {dep.versionMin}</span>}
-                    {dep.versionMax && <span> &le; {dep.versionMax}</span>}
-                    {dep.optional && <span className="text-muted"> ({labels.software.optional})</span>}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {/* Contractors */}
-          {contractors.length > 0 && (
-            <div className="mb-4">
-              <h4>{labels.software.contractors}</h4>
-              {contractors.map((c, i) => (
-                <div key={i} className="mb-1">
-                  <span>{c.name}</span>
-                  {c.until && <span className="text-muted"> (fino al {c.until})</span>}
                 </div>
-              ))}
+              )}
             </div>
-          )}
 
-          {/* Used by */}
-          {usedBy && usedBy.length > 0 && (
-            <div className="mb-4">
-              <h4>
-                {labels.software.used_by}{' '}
-                <span className="badge bg-secondary">{usedBy.length} {labels.software.used_by_count}</span>
-              </h4>
-              <details>
-                <summary>{usedBy.slice(0, 3).join(', ')}{usedBy.length > 3 ? ` e altre ${usedBy.length - 3}` : ''}</summary>
-                <ul className="mt-2">
-                  {usedBy.map((org, i) => (
-                    <li key={i}>{org}</li>
+            {/* features */}
+            {features.length > 0 && (
+              <section>
+                <h2 className="di-section-title">{labels.software.functionality}</h2>
+                <ul className="di-features">
+                  {features.map((f, i) => (
+                    <li key={i}>
+                      <Markdown components={{ p: ({ children }) => <>{children}</> }}>{f}</Markdown>
+                    </li>
                   ))}
                 </ul>
-              </details>
-            </div>
-          )}
+              </section>
+            )}
+
+            {/* used by */}
+            {usedBy && usedBy.length > 0 && (
+              <UsedBySection usedBy={usedBy} labels={labels} />
+            )}
+
+            {/* categories as badges (secondary display after hero) */}
+            {((categories && categories.length > 0) ||
+              (intendedAudience?.scope && intendedAudience.scope.length > 0)) && (
+              <section>
+                <h2 className="di-section-title">{labels.software.categories}</h2>
+                <div className="di-badges">
+                  {(categories ?? []).map((cat) => (
+                    <span key={cat} className="di-badge">{categoryLabels[cat] ?? cat}</span>
+                  ))}
+                  {(intendedAudience?.scope ?? []).map((s) => (
+                    <span key={s} className="di-badge di-badge--platform">{scopeLabels[s] ?? s}</span>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* detail info panel */}
+            <section className="di-info-panel">
+              <div className="di-info-panel__header">Informazioni di dettaglio</div>
+              <dl className="di-info-panel__body">
+                {releaseDate && (
+                  <MetaRow
+                    label={labels.software.last_release}
+                    value={<>{releaseDate}{softwareVersion && <> ({softwareVersion})</>}</>}
+                  />
+                )}
+                {maintenanceType && (
+                  <MetaRow label={labels.software.maintainance_type} value={maintenanceType} />
+                )}
+                {contacts.length > 0 && (
+                  <MetaRow
+                    label={labels.software.technical_contact}
+                    value={
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '.15rem' }}>
+                        {contacts.map((c, i) => (
+                          <span key={i}>
+                            {c.email
+                              ? <a href={`mailto:${c.email}`} style={{ color: 'var(--di-blue)' }}>{c.name ?? c.email}</a>
+                              : c.name}
+                          </span>
+                        ))}
+                      </div>
+                    }
+                  />
+                )}
+                {license && <MetaRow label={labels.software.license} value={license} />}
+                {deployPlatforms && deployPlatforms.length > 0 && (
+                  <MetaRow
+                    label={labels.software.platforms}
+                    value={<>{deployPlatforms.join('  \n')}</>}
+                  />
+                )}
+                {enablingPlatforms.length > 0 && (
+                  <MetaRow
+                    label={labels.software.enabling_platforms}
+                    value={
+                      <div className="di-badges">
+                        {enablingPlatforms.map((p) => (
+                          <span key={p} className="di-badge di-badge--platform">{p}</span>
+                        ))}
+                      </div>
+                    }
+                  />
+                )}
+                {(complianceItems.length > 0 || conformita !== undefined) && (
+                  <MetaRow
+                    label={labels.software.compliance}
+                    value={
+                      complianceItems.length > 0 ? (
+                        <div className="di-badges">
+                          {complianceItems.map((c) => (
+                            <span key={c} className="di-badge di-badge--green">{c}</span>
+                          ))}
+                        </div>
+                      ) : 'Nessuna'
+                    }
+                  />
+                )}
+                {(dependsOnOpen && dependsOnOpen.length > 0) && (
+                  <MetaRow
+                    label={labels.software.dependencies_open}
+                    value={
+                      <div className="di-deps">
+                        {dependsOnOpen.map((dep, i) => (
+                          <div key={i} className="di-deps__item">
+                            <strong>{dep.name}</strong>
+                            {dep.version && <span>{dep.version}</span>}
+                            {!dep.version && dep.versionMin && <span>≥ {dep.versionMin}</span>}
+                            {dep.versionMax && <span>≤ {dep.versionMax}</span>}
+                            {dep.optional && <span style={{ color: 'var(--di-muted)' }}>({labels.software.optional})</span>}
+                          </div>
+                        ))}
+                      </div>
+                    }
+                  />
+                )}
+                {(dependsOnProprietary && dependsOnProprietary.length > 0) && (
+                  <MetaRow
+                    label={labels.software.dependencies_proprietary}
+                    value={
+                      <div className="di-deps">
+                        {dependsOnProprietary.map((dep, i) => (
+                          <div key={i} className="di-deps__item">
+                            <strong>{dep.name}</strong>
+                            {dep.version && <span>{dep.version}</span>}
+                            {dep.optional && <span style={{ color: 'var(--di-muted)' }}>({labels.software.optional})</span>}
+                          </div>
+                        ))}
+                      </div>
+                    }
+                  />
+                )}
+                {availableLanguages && availableLanguages.length > 0 && (
+                  <MetaRow
+                    label={labels.software.supported_languages}
+                    value={availableLanguages.join(', ')}
+                  />
+                )}
+                {apiDocumentation && (
+                  <MetaRow
+                    label={labels.software.api_documentation}
+                    value={
+                      <a href={apiDocumentation} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--di-blue)' }}>
+                        {name} API
+                      </a>
+                    }
+                  />
+                )}
+                {codiceIPA && (
+                  <MetaRow label={labels.software.codice_ipa} value={codiceIPA} />
+                )}
+                {mainCopyrightOwner && (
+                  <MetaRow label={labels.software.main_copyright_owner} value={mainCopyrightOwner} />
+                )}
+                {applicationSuite && (
+                  <MetaRow label={labels.software.application_suite} value={applicationSuite} />
+                )}
+              </dl>
+            </section>
+
+            {/* vitality */}
+            {typeof detail.vitalityScore === 'number' && (
+              <section>
+                <h2 className="di-section-title">{labels.software.vitality}</h2>
+                <div className="di-vitality">
+                  <div className="di-vitality__bar">
+                    <div
+                      className="di-vitality__fill"
+                      role="progressbar"
+                      aria-valuenow={detail.vitalityScore}
+                      aria-valuemin={0}
+                      aria-valuemax={100}
+                      style={{ width: `${Math.min(detail.vitalityScore, 100)}%` }}
+                    />
+                  </div>
+                  <small style={{ color: 'var(--di-muted)' }}>{detail.vitalityScore}%</small>
+                </div>
+              </section>
+            )}
+
+            {/* long description */}
+            {longDescription && (
+              <section>
+                <h2 className="di-section-title">{labels.software.extende_description}</h2>
+                <div className="di-long-desc">
+                  <Markdown>{longDescription}</Markdown>
+                </div>
+              </section>
+            )}
+
+            {/* contacts */}
+            {contacts.length > 0 && (
+              <section>
+                <h2 className="di-section-title">
+                  {contacts.length === 1 ? labels.software.technical_contact : labels.software.technical_contacts}
+                </h2>
+                {contacts.map((c, i) => (
+                  <div key={i} className="di-contact">
+                    <span className="di-contact__name">{c.name}</span>
+                    {c.affiliation && <span className="di-contact__affiliation">{c.affiliation}</span>}
+                    <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                      {c.email && <a href={`mailto:${c.email}`}>{c.email}</a>}
+                      {c.phone && <a href={`tel:${c.phone}`}>{c.phone}</a>}
+                    </div>
+                  </div>
+                ))}
+              </section>
+            )}
+
+            {/* contractors */}
+            {contractors.length > 0 && (
+              <section>
+                <h2 className="di-section-title">{labels.software.contractors}</h2>
+                {contractors.map((c, i) => (
+                  <div key={i} className="di-contact">
+                    <span className="di-contact__name">{c.name}</span>
+                    {c.until && <span className="di-contact__affiliation">fino al {c.until}</span>}
+                  </div>
+                ))}
+              </section>
+            )}
+          </main>
         </div>
       </div>
-    </article>
+    </>
+  );
+}
+
+// ── UsedBySection (with expand/collapse) ────────────────────────────────────
+const PREVIEW_COUNT = 3;
+
+function UsedBySection({ usedBy, labels }: { usedBy: string[]; labels: any }) {
+  const [expanded, setExpanded] = useState(false);
+  const visible = expanded ? usedBy : usedBy.slice(0, PREVIEW_COUNT);
+  const remaining = usedBy.length - PREVIEW_COUNT;
+
+  return (
+    <section className="di-usedby">
+      <h2 className="di-usedby__heading">
+        {labels.software.used_by}
+        <span className="di-usedby__count">{usedBy.length}</span>
+      </h2>
+      <ul className="di-usedby__list">
+        {visible.map((org, i) => (
+          <li key={i}>{org}</li>
+        ))}
+      </ul>
+      {usedBy.length > PREVIEW_COUNT && (
+        <button
+          className="di-usedby__toggle"
+          onClick={() => setExpanded((e) => !e)}
+        >
+          {expanded
+            ? 'Mostra meno'
+            : `e altre ${remaining} amministrazioni →`}
+        </button>
+      )}
+    </section>
   );
 }
