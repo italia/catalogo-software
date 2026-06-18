@@ -109,7 +109,7 @@ export default function () {
                       <use href="/sprites.svg#it-burger"></use>
                     </svg>
                   </button>
-                  <div className="navbar-collapsable" id="navC1" tabindex="-1">
+                  <div className="navbar-collapsable" id="navC1"  >
                     <div className="close-div">
                       <button className="btn close-menu" type="button">
                         <span className="visually-hidden">Nascondi la navigazione</span>
