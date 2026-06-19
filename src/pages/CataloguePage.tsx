@@ -98,18 +98,18 @@ export function CataloguePage() {
             {/* Summary bar */}
             <div className="row">
               <div className="row col-12 py-3 px-2 align-items-center text-center">
-                <h3 className="col-6 fw-bold text-start" data-testid="counter-summary">
+                <h3 className="col-12 fw-bold text-start" data-testid="counter-summary">
                   {total} {labels.software.results}
                 </h3>
-                <div className="col-6 col-md-2 d-lg-none">
+                <div className="col-12 col-md-2 d-lg-none">
                   <div
-                    className="catalogue-filters-title"
+                    className="btn btn-outline-primary"
                     role="button"
                     onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)}
                   >
                     <span>{labels.software.filters}</span>
                     {totalAppliedFilters > 0 && (
-                      <span className="badge rounded-pill bg-primary ms-2">{totalAppliedFilters}</span>
+                      <span className="badge bg-primary ms-2">{totalAppliedFilters}</span>
                     )}
                   </div>
                 </div>
@@ -119,7 +119,7 @@ export function CataloguePage() {
               {/* Mobile filters */}
               {mobileFiltersOpen && (
                 <div className="row col-12 mb-5 d-lg-none">
-                  <div className="col-10 m-auto">
+                  <div className="col-12 m-auto">
                     <CatalogueFiltersPanel
                       type={type}
                       filters={filters}

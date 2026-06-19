@@ -8,7 +8,7 @@ export const labels = {
     catalogue: 'Catalogo software',
     cataloguePNRR: 'Selezione dedicata al PNRR',
     load_more: 'Carica altri',
-    filters: 'Filtri',
+    filters: 'Filtri applicati',
     sort_by: 'Ordina per',
     sort_by_relevance: 'Rilevanza',
     sort_by_release_date: 'Più recenti',
