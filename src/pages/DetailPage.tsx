@@ -224,11 +224,11 @@ export function DetailPage() {
     <>
       {/* ── scoped styles ──────────────────────────────────────────────── */}
 
+      <article className="container" style={{ marginTop: '2.5rem', marginBottom: '6rem' }} data-testid="catalogue-container">
 
-      <div className="di-page">
         {/* back */}
         <Link to="/" className="di-back-link">
-          ← {labels.software.back_to_catalogue}
+          <svg className="icon icon-sm icon-primary me-2"><use href="/sprites.svg#it-arrow-left"></use></svg> {labels.software.back_to_catalogue}
         </Link>
 
         <div className="di-layout">
@@ -320,8 +320,8 @@ export function DetailPage() {
               )}
 
               {devStatus && (
-                <div>
-                  <span className="di-status">
+                <div className="chip chip-success">
+                  <span className="chip-label">
                     {labels.software.development_status}:{' '}
                     {developmentStatusLabels[devStatus] ?? devStatus}
                   </span>
@@ -332,7 +332,7 @@ export function DetailPage() {
             {/* features */}
             {features.length > 0 && (
               <section>
-                <h2 className="di-section-title">{labels.software.functionality}</h2>
+                <h2 className="">{labels.software.functionality}</h2>
                 <ul className="di-features">
                   {features.map((f, i) => (
                     <li key={i}>
@@ -352,13 +352,17 @@ export function DetailPage() {
             {((categories && categories.length > 0) ||
               (intendedAudience?.scope && intendedAudience.scope.length > 0)) && (
               <section>
-                <h2 className="di-section-title">{labels.software.categories}</h2>
+                <h2 className="">{labels.software.categories}</h2>
                 <div className="di-badges">
                   {(categories ?? []).map((cat) => (
-                    <span key={cat} className="di-badge">{categoryLabels[cat] ?? cat}</span>
+                    <div className="chip chip-primary">
+                      <span key={cat} className="chip-label">{categoryLabels[cat] ?? cat}</span>
+                    </div>
                   ))}
                   {(intendedAudience?.scope ?? []).map((s) => (
-                    <span key={s} className="di-badge di-badge--platform">{scopeLabels[s] ?? s}</span>
+                    <div className="chip chip-primary">
+                      <span key={s} className="chip-label">{scopeLabels[s] ?? s}</span>
+                    </div>
                   ))}
                 </div>
               </section>
@@ -404,9 +408,9 @@ export function DetailPage() {
                   <MetaRow
                     label={labels.software.enabling_platforms}
                     value={
-                      <div className="di-badges">
+                      <div className="chip chip-primary">
                         {enablingPlatforms.map((p) => (
-                          <span key={p} className="di-badge di-badge--platform">{p}</span>
+                          <span key={p} className="chip-label">{p}</span>
                         ))}
                       </div>
                     }
@@ -417,9 +421,9 @@ export function DetailPage() {
                     label={labels.software.compliance}
                     value={
                       complianceItems.length > 0 ? (
-                        <div className="di-badges">
+                        <div className="chip chip-primary">
                           {complianceItems.map((c) => (
-                            <span key={c} className="di-badge di-badge--green">{c}</span>
+                            <span key={c} className="chip-label">{c}</span>
                           ))}
                         </div>
                       ) : 'Nessuna'
@@ -491,7 +495,7 @@ export function DetailPage() {
             {/* vitality */}
             {typeof detail.vitalityScore === 'number' && (
               <section>
-                <h2 className="di-section-title">{labels.software.vitality}</h2>
+                <h2 className="">{labels.software.vitality}</h2>
                 <div className="di-vitality">
                   <div className="di-vitality__bar">
                     <div
@@ -511,7 +515,7 @@ export function DetailPage() {
             {/* long description */}
             {longDescription && (
               <section>
-                <h2 className="di-section-title">{labels.software.extende_description}</h2>
+                <h2 className="">{labels.software.extende_description}</h2>
                 <div className="di-long-desc">
                   <Markdown>{longDescription}</Markdown>
                 </div>
@@ -521,7 +525,7 @@ export function DetailPage() {
             {/* contacts */}
             {contacts.length > 0 && (
               <section>
-                <h2 className="di-section-title">
+                <h2 className="">
                   {contacts.length === 1 ? labels.software.technical_contact : labels.software.technical_contacts}
                 </h2>
                 {contacts.map((c, i) => (
@@ -540,7 +544,7 @@ export function DetailPage() {
             {/* contractors */}
             {contractors.length > 0 && (
               <section>
-                <h2 className="di-section-title">{labels.software.contractors}</h2>
+                <h2 className="">{labels.software.contractors}</h2>
                 {contractors.map((c, i) => (
                   <div key={i} className="di-contact">
                     <span className="di-contact__name">{c.name}</span>
@@ -551,7 +555,7 @@ export function DetailPage() {
             )}
           </main>
         </div>
-      </div>
+      </article>
     </>
   );
 }
@@ -566,10 +570,10 @@ function UsedBySection({ usedBy, labels }: { usedBy: string[]; labels: any }) {
 
   return (
     <section className="di-usedby">
-      <h2 className="di-usedby__heading">
-        {labels.software.used_by}
-        <span className="di-usedby__count">{usedBy.length}</span>
-      </h2>
+      <h3>
+        {labels.software.used_by}&nbsp;
+        <span>{usedBy.length} amministrazioni</span>
+      </h3>
       <ul className="di-usedby__list">
         {visible.map((org, i) => (
           <li key={i}>{org}</li>
@@ -582,7 +586,7 @@ function UsedBySection({ usedBy, labels }: { usedBy: string[]; labels: any }) {
         >
           {expanded
             ? 'Mostra meno'
-            : `e altre ${remaining} amministrazioni →`}
+            : `e altre ${remaining}`}
         </button>
       )}
     </section>
