@@ -47,6 +47,7 @@ export function CatalogueFiltersPanel({ type, filters, onTypeChange, onFiltersCh
         }}
         capitalize={false}
       />
+      <hr/>
 
       {filters.pnrr && (
         <>
@@ -58,6 +59,7 @@ export function CatalogueFiltersPanel({ type, filters, onTypeChange, onFiltersCh
             capitalize={false}
             radio
           />
+          <hr/>
           <CatalogueFilters
             title={labels.software.pnrr_measures}
             options={pnrrMeasures}
@@ -66,6 +68,7 @@ export function CatalogueFiltersPanel({ type, filters, onTypeChange, onFiltersCh
             capitalize={false}
             radio
           />
+          <hr/>
         </>
       )}
 
@@ -76,27 +79,28 @@ export function CatalogueFiltersPanel({ type, filters, onTypeChange, onFiltersCh
         onChange={(val) => onTypeChange(val as string)}
         radio
       />
-
+      <hr/>
       <CatalogueFilters
         title={labels.software.categories}
         options={categories}
         selected={filters.categories}
         onChange={(val) => onFiltersChange({ ...filters, categories: val as string[] })}
       />
-
+      <hr/>
       <CatalogueFilters
         title={labels.software.intended_audience}
         options={scopes}
         selected={filters.intendedAudiences}
         onChange={(val) => onFiltersChange({ ...filters, intendedAudiences: val as string[] })}
       />
-
+      <hr/>
       <CatalogueFilters
         title={labels.software.development_status}
         options={devStatuses}
         selected={filters.developmentStatuses}
         onChange={(val) => onFiltersChange({ ...filters, developmentStatuses: val as string[] })}
       />
+      <hr/>
     </>
   );
 }

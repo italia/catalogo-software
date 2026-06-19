@@ -76,7 +76,6 @@ export function CatalogueFilters({
           </div>
         );
       })}
-    <hr></hr>
     </div>
   );
 }
