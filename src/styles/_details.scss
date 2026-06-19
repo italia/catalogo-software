@@ -1,25 +1,13 @@
 :root {
     --di-blue:        #0066cc;
-    --di-blue-dark:   #004d99;
     --di-blue-light:  #e8f0fb;
-    --di-green:       #008055;
     --di-muted:       #020202;
     --di-border:      #d6dce3;
     --di-bg:          #f2f7fc;
     --di-white:       #ffffff;
-    --di-badge-bg:    #e8f0fb;
-    --di-badge-text:  #004d99;
-    --di-radius:      4px;
 }
 
 /* ── layout ──────────────────────────────────────── */
-.di-page {
-    color: var(--di-text);
-    max-width: 1140px;
-    margin: 0 auto;
-    padding: 2rem 1rem 5rem;
-}
-
 .di-back-link {
     display: inline-flex;
     align-items: center;
@@ -48,7 +36,6 @@
 .di-logo-card {
     background: var(--di-white);
     border: 1px solid var(--di-border);
-    border-radius: var(--di-radius);
     padding: 1.25rem;
     display: flex;
     align-items: center;
@@ -67,7 +54,6 @@
     width: 100%;
     aspect-ratio: 16/9;
     object-fit: cover;
-    border-radius: var(--di-radius);
     border: 1px solid var(--di-border);
     cursor: zoom-in;
     display: block;
@@ -121,7 +107,6 @@
 /* used-by */
 .di-usedby {
     background: var(--di-bg);
-    border-radius: var(--di-radius);
     padding: 1.25rem 1.5rem;
 }
 
@@ -149,7 +134,6 @@
 /* detail info panel */
 .di-info-panel {
     border: 1px solid var(--di-border);
-    border-radius: var(--di-radius);
     overflow: hidden;
 }
 .di-info-panel__header {
@@ -186,7 +170,6 @@
 .di-long-desc {
     background: var(--di-white);
     border: 1px solid var(--di-border);
-    border-radius: var(--di-radius);
     padding: 1.5rem;
     color: var(--di-text);
 }

@@ -406,13 +406,12 @@ export function DetailPage() {
                 {enablingPlatforms.length > 0 && (
                   <MetaRow
                     label={labels.software.enabling_platforms}
-                    value={
-                      <div className="chip chip-primary">
+                    value=
                         {enablingPlatforms.map((p) => (
-                          <span key={p} className="chip-label">{p}</span>
+                          <div className="chip chip-primary">
+                            <span key={p} className="chip-label">{p}</span>
+                          </div>
                         ))}
-                      </div>
-                    }
                   />
                 )}
                 {(complianceItems.length > 0 || conformita !== undefined) && (
