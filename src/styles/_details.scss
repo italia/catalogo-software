@@ -101,37 +101,6 @@
 /* ── right column ────────────────────────────────── */
 .di-right { display: flex; flex-direction: column; gap: 2rem; }
 
-/* hero */
-.di-hero__category {
-    display: inline-flex;
-    align-items: center;
-    gap: .4rem;
-    text-transform: uppercase;
-    letter-spacing: .08em;
-    color: var(--di-blue);
-    margin-bottom: .5rem;
-}
-.di-hero__category a {
-    color: inherit;
-    text-decoration: none;
-}
-.di-hero__title {
-    color: var(--di-text);
-    margin: 0 0 .5rem;
-}
-.di-hero__version {
-    color: var(--di-muted);
-    margin-left: .35rem;
-}
-.di-hero__subtitle {
-    color: var(--di-muted);
-    margin: 0 0 .75rem;
-}
-.di-hero__publisher {
-    color: var(--di-text);
-}
-.di-hero__publisher strong { color: var(--di-blue); }
-
 /* features */
 .di-features { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: .4rem; }
 .di-features li {

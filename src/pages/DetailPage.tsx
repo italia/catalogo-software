@@ -291,29 +291,28 @@ export function DetailPage() {
             <div>
               {/* category chips */}
               {categories && categories.length > 0 && (
-                <div className="di-hero__category">
+                <div>
                   {categories.map((cat, i) => (
-                    <span key={cat}>
-                      {i > 0 && <span style={{ color: '#aaa', margin: '0 .2rem' }}>·</span>}
-                      <span>{categoryLabels[cat] ?? cat}</span>
-                    </span>
+                    <div className="chip chip-primary" key={cat}>
+                      <span className="chip-label text-uppercase">{categoryLabels[cat] ?? cat}</span>
+                    </div>
                   ))}
                 </div>
               )}
 
-              <h1 className="di-hero__title">
+              <h1>
                 {name}
                 {softwareVersion && (
-                  <span className="di-hero__version">{softwareVersion}</span>
+                  <span>{softwareVersion}</span>
                 )}
               </h1>
 
               {desc?.shortDescription && (
-                <p className="di-hero__subtitle">{desc.shortDescription}</p>
+                <p>{desc.shortDescription}</p>
               )}
 
               {(repoOwner || codiceIPALabel || organisation?.name) && (
-                <p className="di-hero__publisher">
+                <p>
                   {labels.software.published_by}{' '}
                   <strong>{codiceIPALabel ?? organisation?.name ?? repoOwner}</strong>
                 </p>
