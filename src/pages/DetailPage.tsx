@@ -8,6 +8,7 @@ import { Spinner } from '../components/Spinner';
 import { ImageWithPlaceholder } from '../components/ImageWithPlaceholder';
 import Markdown from 'react-markdown';
 import { labels, developmentStatusLabels, categoryLabels, scopeLabels } from '../utils/i18n';
+import Layout from '../components/layout';
 
 // ─── helpers ────────────────────────────────────────────────────────────────
 
@@ -221,7 +222,7 @@ export function DetailPage() {
   if (conformita?.gdpr) complianceItems.push('GDPR');
 
   return (
-    <>
+    <Layout>
       {/* ── scoped styles ──────────────────────────────────────────────── */}
 
       <article className="container" style={{ marginTop: '2.5rem', marginBottom: '6rem' }} data-testid="catalogue-container">
@@ -554,7 +555,7 @@ export function DetailPage() {
           </main>
         </div>
       </article>
-    </>
+    </Layout>
   );
 }
 
