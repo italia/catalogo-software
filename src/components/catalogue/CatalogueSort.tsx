@@ -13,7 +13,7 @@ export function CatalogueSort({ sortBy, searchValue, onChange }: Props) {
   return (
     <div className="select-wrapper">
       <label htmlFor="sort-by">{labels.software.sort_by}</label>
-      <select value={sortBy} onChange={(e) => onChange(e.target.value)}>
+      <select value={sortBy} onChange={(e) => onChange(e.target.value)} style={{ padding: '0.7rem' }} id="sort-by" data-testid="sort-by">
         {showRelevance && <option value="relevance">{labels.software.sort_by_relevance}</option>}
         <option value="release_date">{labels.software.sort_by_release_date}</option>
         {/* TODO: re-enable when vitalityScore sorting is fixed on the API side */}
