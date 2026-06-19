@@ -62,6 +62,7 @@ export function CataloguePage() {
         <div className="row">
           {/* Desktop sidebar */}
           <section className="col-lg-3 d-none d-lg-flex flex-column">
+            <h3>Filtra per</h3>
             <CatalogueFiltersPanel
               type={type}
               filters={filters}

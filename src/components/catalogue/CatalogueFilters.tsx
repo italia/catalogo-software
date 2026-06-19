@@ -34,7 +34,7 @@ export function CatalogueFilters({
   };
 
   return (
-    <div className="mt-2" style={{ maxHeight: expanded ? '100%' : 200, overflowY: 'hidden', paddingLeft: 2, transition: 'max-height 0.5s' }}>
+    <div className="" style={{ maxHeight: expanded ? '100%' : 200, overflowY: 'hidden', paddingLeft: 2, transition: 'max-height 0.5s' }}>
       <div
         className="catalogue-filters-title"
         role="button"
@@ -42,7 +42,7 @@ export function CatalogueFilters({
         data-testid="catalogue-filters-title"
       >
         <div className="d-flex align-items-center">
-          <span>{title}</span>
+          <h4 className="h6">{title}</h4>
           {selectedCount > 0 && (
             <span className="badge rounded-pill bg-primary ms-2" data-testid="counter">
               {selectedCount}
@@ -76,6 +76,7 @@ export function CatalogueFilters({
           </div>
         );
       })}
+    <hr></hr>
     </div>
   );
 }
