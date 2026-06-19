@@ -103,11 +103,11 @@ function ActionLink({ href, icon, label }: ActionLinkProps) {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="di-action-link"
+      className="btn btn-outline-primary text-start"
     >
-      <span className="di-action-link__icon">{icon}</span>
-      <span className="di-action-link__label">{label}</span>
-      <span className="di-action-link__arrow" aria-hidden="true">→</span>
+      {icon}
+      <span className="d-inline-block" style={{ width: '1rem' }}></span>
+      <span>{label}</span>
     </a>
   );
 }
