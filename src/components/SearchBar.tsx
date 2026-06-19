@@ -21,19 +21,25 @@ export function SearchBar({ defaultValue, placeholder, onChange }: SearchBarProp
   );
 
   return (
-    <h2 className="d-flex align-items-center mb-0">
-      <svg className="icon icon-lg mb-0 d-none d-lg-block icon-primary" aria-hidden="true">
-        <use href="/sprites.svg#it-search" xlinkHref="/sprites.svg#it-search" />
-      </svg>
-      <input
-        data-testid="search-bar"
-        autoFocus
-        placeholder={placeholder}
-        type="text"
-        className="search-bar"
-        defaultValue={defaultValue}
-        onChange={handleChange}
-      />
-    </h2>
+    <div className="form-group">     
+      <label htmlFor="main-search">Nome del software</label> 
+      <div className="input-group">
+        <span className="input-group-text">
+          <svg className="icon icon-sm icon-secondary" aria-hidden="true">
+            <use href="/sprites.svg#it-search" xlinkHref="/sprites.svg#it-search" />
+          </svg>
+        </span>
+        <input
+          id="main-search"
+          data-testid="search-bar"
+          autoFocus
+          placeholder={placeholder}
+          type="text"
+          className="form-control"
+          defaultValue={defaultValue}
+          onChange={handleChange}
+        />
+      </div>
+    </div>
   );
 }

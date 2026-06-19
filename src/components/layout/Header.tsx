@@ -13,16 +13,16 @@ export default function () {
                       <span>Ente appartenenza</span>
                       <svg className="icon" aria-hidden="true"><use href="/sprites.svg#it-expand"></use></svg>
                     </a>
-                    <div className="link-list-wrapper collapse" id="menuC1">
+                    {/* <div className="link-list-wrapper collapse" id="menuC1">
                       <ul className="link-list">
                         <li><a className="dropdown-item list-item" href="#">Link 1</a></li>
                         <li><a className="list-item active" href="#" aria-current="page">Link 2 (Attivo)</a></li>
                       </ul>
-                    </div>
+                    </div> */}
                   </nav>
                 </div>
                 <div className="it-header-slim-right-zone">
-                  <div className="nav-item dropdown">
+                  {/* <div className="nav-item dropdown">
                     <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       <span className="visually-hidden">Selezione lingua: lingua selezionata</span>
                       <span>ITA</span>
@@ -43,7 +43,7 @@ export default function () {
                   </div>
                   <div className="it-access-top-wrapper">
                     <a className="btn btn-primary btn-sm" href="#">Accedi</a>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
@@ -60,8 +60,8 @@ export default function () {
                     <a href="#">
                       <svg className="icon" aria-hidden="true"><use href="/sprites.svg#it-pa"></use></svg>
                       <div className="it-brand-text">
-                        <div className="it-brand-title">Nome dell'Istituzione</div>
-                        <div className="it-brand-tagline d-none d-md-block">Tag line dell'Istituzione</div>
+                        <div className="it-brand-title">Catalogo del software</div>
+                        <div className="it-brand-tagline d-none d-md-block">Tutto il catalogo</div>
                       </div>
                     </a>
                   </div>
@@ -86,12 +86,12 @@ export default function () {
                         </li>
                       </ul>
                     </div>
-                    <div className="it-search-wrapper">
+                    {/* <div className="it-search-wrapper">
                       <span className="d-none d-md-block">Cerca</span>
                       <a className="search-link rounded-icon" aria-label="Cerca nel sito" href="#">
                         <svg className="icon"><use href="/sprites.svg#it-search"></use></svg>
                       </a>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
@@ -118,14 +118,14 @@ export default function () {
                         </svg>
                       </button>
                     </div>
-                    <div className="menu-wrapper">
+                    {/* <div className="menu-wrapper">
                       <ul className="navbar-nav">
                         <li className="nav-item active"><a className="nav-link active" href="#" aria-current="page"><span>Link 1 (attivo)</span></a></li>
                         <li className="nav-item"><a className="nav-link disabled" href="#" aria-disabled="true"><span>Link 2 (disabilitato)</span></a></li>
                         <li className="nav-item"><a className="nav-link" href="#"><span>Link 3</span></a></li>
                         <li className="nav-item"><a className="nav-link" href="#"><span>Link 4</span></a></li>
                       </ul>
-                    </div>
+                    </div> */}
                   </div>
                 </nav>
               </div>

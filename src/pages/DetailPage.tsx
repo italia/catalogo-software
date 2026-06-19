@@ -302,9 +302,9 @@ export function DetailPage() {
               )}
 
               <h1>
-                {name}
+                {name}&nbsp;
                 {softwareVersion && (
-                  <span>{softwareVersion}</span>
+                  <span className="badge badge-primary">{softwareVersion}</span>
                 )}
               </h1>
 

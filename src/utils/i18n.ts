@@ -18,7 +18,7 @@ export const labels = {
     intended_audience: 'Ambito di applicazione',
     development_status: 'Stato di sviluppo',
     type: 'Tipologia',
-    results: 'risultati',
+    results: 'risultati trovati',
     no_results: 'Nessun risultato trovato',
     retry_search:
       'La ricerca non ha prodotto nessun risultato. Prova un\'altra chiave di ricerca.',

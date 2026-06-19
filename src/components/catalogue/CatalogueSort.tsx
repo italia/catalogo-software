@@ -11,8 +11,8 @@ export function CatalogueSort({ sortBy, searchValue, onChange }: Props) {
   const showRelevance = sortBy === RELEVANCE || !!searchValue;
 
   return (
-    <div className="d-flex flex-wrap justify-content-end align-items-center">
-      <label className="mb-0 pe-2">{labels.software.sort_by}</label>
+    <div className="select-wrapper">
+      <label htmlFor="sort-by">{labels.software.sort_by}</label>
       <select value={sortBy} onChange={(e) => onChange(e.target.value)}>
         {showRelevance && <option value="relevance">{labels.software.sort_by_relevance}</option>}
         <option value="release_date">{labels.software.sort_by_release_date}</option>

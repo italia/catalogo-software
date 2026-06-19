@@ -73,26 +73,34 @@ export function CataloguePage() {
           {/* Main content */}
           <section className="col-12 col-lg-9">
             {/* Header with search */}
-            <div className="text-center">
-              <h1 style={{ fontSize: '3rem' }}>
-                {filters.pnrr ? labels.software.cataloguePNRR : labels.software.catalogue}
-              </h1>
-              <div className="col-12 col-md-10 mx-auto text-center mb-3">
+            <div className="row mb-4">
+              {/* <h1 style={{ fontSize: '3rem' }}>
+                {{filters.pnrr ? labels.software.cataloguePNRR : labels.software.catalogue}}
+              </h1> */}
+                <div className="col-12 col-lg-9">
                 <SearchBar
                   onChange={handleSearch}
                   defaultValue={searchValue}
-                  placeholder={labels.search_form_label}
+                  placeholder={labels.search_form_catalogue}
                 />
-              </div>
+                </div>
+                <div className="col-12 col-lg-3">
+                  <CatalogueSort
+                    sortBy={sortBy}
+                    searchValue={searchValue}
+                    onChange={handleSortChange}
+                  />
+                </div>
+              
             </div>
 
             {/* Summary bar */}
             <div className="row">
               <div className="row col-12 py-3 px-2 align-items-center text-center">
-                <div className="col-3 fw-bold text-start" data-testid="counter-summary">
+                <h3 className="col-6 fw-bold text-start" data-testid="counter-summary">
                   {total} {labels.software.results}
-                </div>
-                <div className="col-3 col-md-2 d-lg-none">
+                </h3>
+                <div className="col-6 col-md-2 d-lg-none">
                   <div
                     className="catalogue-filters-title"
                     role="button"
@@ -104,13 +112,7 @@ export function CataloguePage() {
                     )}
                   </div>
                 </div>
-                <div className="col-6 col-md-7 col-lg-9">
-                  <CatalogueSort
-                    sortBy={sortBy}
-                    searchValue={searchValue}
-                    onChange={handleSortChange}
-                  />
-                </div>
+
               </div>
 
               {/* Mobile filters */}
@@ -128,7 +130,7 @@ export function CataloguePage() {
               )}
             </div>
 
-            <div className="mx-auto dropdown-divider" />
+            <hr/>
 
             {/* Results */}
             {isLoading && items.length === 0 ? (
