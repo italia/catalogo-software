@@ -292,7 +292,7 @@ export function DetailPage() {
             <div>
               {/* category chips */}
               {categories && categories.length > 0 && (
-                <div>
+                <div className="mb-1">
                   {categories.map((cat, i) => (
                     <div className="chip chip-primary" key={cat}>
                       <span className="chip-label text-uppercase">{categoryLabels[cat] ?? cat}</span>
@@ -349,29 +349,31 @@ export function DetailPage() {
             )}
 
             {/* categories as badges (secondary display after hero) */}
-            {((categories && categories.length > 0) ||
-              (intendedAudience?.scope && intendedAudience.scope.length > 0)) && (
-              <section>
-                <h2 className="">{labels.software.categories}</h2>
-                <div className="di-badges">
-                  {(categories ?? []).map((cat) => (
-                    <div className="chip chip-primary">
-                      <span key={cat} className="chip-label">{categoryLabels[cat] ?? cat}</span>
-                    </div>
-                  ))}
-                  {(intendedAudience?.scope ?? []).map((s) => (
-                    <div className="chip chip-primary">
-                      <span key={s} className="chip-label">{scopeLabels[s] ?? s}</span>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            )}
+
 
             {/* detail info panel */}
             <section className="di-info-panel">
               <div className="di-info-panel__header">Informazioni di dettaglio</div>
               <dl className="di-info-panel__body">
+                {((categories && categories.length > 0) ||
+                  (intendedAudience?.scope && intendedAudience.scope.length > 0)) && (
+                  <MetaRow
+                    label={labels.software.categories}
+                    value={
+                      <div>
+                        {(categories ?? []).map((cat) => (
+                          <div className="chip chip-primary">
+                            <span key={cat} className="chip-label">{categoryLabels[cat] ?? cat}</span>
+                          </div>
+                        ))}
+                        {(intendedAudience?.scope ?? []).map((s) => (
+                          <div className="chip chip-primary">
+                            <span key={s} className="chip-label">{scopeLabels[s] ?? s}</span>
+                          </div>
+                        ))}
+                      </div>
+                    } />
+                )}
                 {releaseDate && (
                   <MetaRow
                     label={labels.software.last_release}
@@ -387,11 +389,14 @@ export function DetailPage() {
                     value={
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '.15rem' }}>
                         {contacts.map((c, i) => (
-                          <span key={i}>
-                            {c.email
-                              ? <a href={`mailto:${c.email}`} style={{ color: 'var(--di-blue)' }}>{c.name ?? c.email}</a>
-                              : c.name}
-                          </span>
+                          <div key={i} className="di-contact">
+                            <span className="di-contact__name">{c.name}</span>
+                            {c.affiliation && <span className="di-contact__affiliation">{c.affiliation}</span>}
+                            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                              {c.email && <a href={`mailto:${c.email}`}>{c.email}</a>}
+                              {c.phone && <a href={`tel:${c.phone}`}>{c.phone}</a>}
+                            </div>
+                          </div>
                         ))}
                       </div>
                     }
@@ -521,24 +526,6 @@ export function DetailPage() {
               </section>
             )}
 
-            {/* contacts */}
-            {contacts.length > 0 && (
-              <section>
-                <h2 className="">
-                  {contacts.length === 1 ? labels.software.technical_contact : labels.software.technical_contacts}
-                </h2>
-                {contacts.map((c, i) => (
-                  <div key={i} className="di-contact">
-                    <span className="di-contact__name">{c.name}</span>
-                    {c.affiliation && <span className="di-contact__affiliation">{c.affiliation}</span>}
-                    <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-                      {c.email && <a href={`mailto:${c.email}`}>{c.email}</a>}
-                      {c.phone && <a href={`tel:${c.phone}`}>{c.phone}</a>}
-                    </div>
-                  </div>
-                ))}
-              </section>
-            )}
 
             {/* contractors */}
             {contractors.length > 0 && (
