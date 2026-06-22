@@ -97,7 +97,7 @@ export function CataloguePage() {
 
             {/* Summary bar */}
             <div className="row">
-              <div className="row col-12 py-3 px-2 align-items-center text-center">
+              <div className="col-12 py-3 px-2 align-items-center text-center">
                 <h3 className="col-12 fw-bold text-start" data-testid="counter-summary">
                   {total} {labels.software.results}
                 </h3>
@@ -118,7 +118,7 @@ export function CataloguePage() {
 
               {/* Mobile filters */}
               {mobileFiltersOpen && (
-                <div className="row col-12 mb-5 d-lg-none">
+                <div className="col-12 mb-5 d-lg-none">
                   <div className="col-12 m-auto">
                     <CatalogueFiltersPanel
                       type={type}
