@@ -58,7 +58,7 @@ export function CataloguePage() {
 
   return (
     <Layout>
-      <article className="container" style={{ marginTop: '2.5rem', marginBottom: '6rem' }} data-testid="catalogue-container">
+      <main className="container" style={{ marginTop: '2.5rem', marginBottom: '6rem' }} data-testid="catalogue-container">
         <div className="row">
           {/* Desktop sidebar */}
           <section className="col-lg-3 d-none d-lg-flex flex-column">
@@ -151,7 +151,7 @@ export function CataloguePage() {
             )}
           </section>
         </div>
-      </article>
+      </main>
     </Layout>
   );
 }

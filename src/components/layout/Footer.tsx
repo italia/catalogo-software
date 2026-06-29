@@ -20,7 +20,7 @@ export default function () {
           </section>
           <section className="pt-4 border-white border-top">
             <div className="row">
-              <div className="col-lg-4 col-md-4 mt-2">
+              <div className="col-lg-8 col-md-8 mt-2">
                 <h4>Contatti</h4>
                 <p>
                   <strong>Nome Ente</strong>
@@ -54,13 +54,13 @@ export default function () {
                   </ul>
                 </div>
               </div>
-              <div className="col-lg-4 col-md-4 mt-2">
+              {/* <div className="col-lg-4 col-md-4 mt-2">
                 <h4>Newsletter</h4>
                 <div className="form-group d-flex gap-1">
                   <input type="text" className="form-control form-control-sm" id="exampleFormGroup2" placeholder="Inserisci la tua email" aria-label="Inserisci la tua email" />
                   <button type="submit" className="btn btn-primary">Iscriviti</button>
                 </div>
-              </div>
+              </div> */}
             </div>
           </section>
         </div>
