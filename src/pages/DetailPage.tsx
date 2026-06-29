@@ -225,7 +225,7 @@ export function DetailPage() {
     <Layout>
       {/* ── scoped styles ──────────────────────────────────────────────── */}
 
-      <article className="container" style={{ marginTop: '2.5rem', marginBottom: '6rem' }} data-testid="catalogue-container">
+      <main className="container" style={{ marginTop: '2.5rem', marginBottom: '6rem' }} data-testid="catalogue-container">
 
         {/* back */}
         <Link to="/" className="di-back-link">
@@ -541,7 +541,7 @@ export function DetailPage() {
             )}
           </main>
         </div>
-      </article>
+      </main>
     </Layout>
   );
 }
