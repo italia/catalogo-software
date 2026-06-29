@@ -10,7 +10,7 @@ export function CatalogueItems({ items }: Props) {
   if (items.length === 0) {
     return (
       <div className="text-center mt-4" data-testid="catalogue-no-results">
-        <h1>{labels.software.no_results}</h1>
+        <h2>{labels.software.no_results}</h2>
         <p className="font-sans-serif content-text">{labels.software.retry_search}</p>
       </div>
     );

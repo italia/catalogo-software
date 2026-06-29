@@ -60,7 +60,7 @@ export default function () {
                     <a href="#">
                       <svg className="icon" aria-hidden="true"><use href="/sprites.svg#it-pa"></use></svg>
                       <div className="it-brand-text">
-                        <div className="it-brand-title">Catalogo del software</div>
+                        <h1 className="it-brand-title">Catalogo del software</h1>
                         <div className="it-brand-tagline d-none d-md-block">Tutto il catalogo</div>
                       </div>
                     </a>
