@@ -75,9 +75,6 @@ export function CataloguePage() {
           <section className="col-12 col-lg-9">
             {/* Header with search */}
             <div className="row mb-4">
-              {/* <h1 style={{ fontSize: '3rem' }}>
-                {{filters.pnrr ? labels.software.cataloguePNRR : labels.software.catalogue}}
-              </h1> */}
                 <div className="col-12 col-lg-9">
                 <SearchBar
                   onChange={handleSearch}
