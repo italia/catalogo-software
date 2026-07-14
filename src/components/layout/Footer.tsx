@@ -1,83 +1,113 @@
 export default function () {
   return (<div>
     <footer className="it-footer">
-      <div className="it-footer-main">
+      <div className="footer-brand it-footer-small-prints pt-5 pb-4 text-white">
         <div className="container">
-          <section className="pb-4">
-            <div className="row clearfix">
-              <div className="col-sm-12">
-                <div className="it-brand-wrapper">
-                  <a href="#" data-focus-mouse="false">
-                    <svg className="icon"><use href="/sprites.svg#it-pa"></use></svg>
-                    <div className="it-brand-text">
-                      <h2>Nome Ente</h2>
-                      <h3>Tagline</h3>
-                    </div>
+          <div className="row">
+            <div className="col-12 text-center text-md-start">
+              <div className="small mb-4"><p>Il Dipartimento per la trasformazione digitale coordina l'attuazione delle misure digitali del PNRR, finanziato dall'Unione europea (NextGenerationEU)</p>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-12">
+              <ul className="logos list-unstyled d-flex flex-column flex-md-row flex-wrap align-items-center mb-0">
+                <li className="mb-4 me-md-5">
+                  <a href="https://commission.europa.eu/index_it" target="_blank" rel="noreferrer" className="d-block h6 fw-semibold text-decoration-none d-flex align-items-center">
+                    <img src="/assets/logo/logo_finanziato_nextgeneu-05.svg" title="" alt="Apre in un nuovo tab" sizes="(max-width: 480px) 466px, (max-width: 1024px) 720px, 928px" loading="lazy" decoding="async" fetchpriority="auto" width="275" height="40" />
                   </a>
-                </div>
+                </li><li className="mb-4 me-md-5">
+                  <a href="https://innovazione.gov.it/dipartimento/" target="_blank" rel="noreferrer" className="d-block h6 fw-semibold text-decoration-none d-flex align-items-center">
+                    <img src="/assets/logo/dtd.svg" title="" alt="Apre in un nuovo tab" sizes="(max-width: 480px) 466px, (max-width: 1024px) 720px, 928px" loading="lazy" decoding="async" fetchpriority="auto" width="275" height="40" />
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="it-footer-main" id="footer">
+        <div className="container">
+          <section className="px-0">
+            <div className="row">
+              <div className="col-12 py-4">  <ul className="it-footer-small-prints-list list-inline mb-0 d-flex flex-wrap flex-md-row">  </ul>
               </div>
             </div>
           </section>
-          <section className="pt-4 border-white border-top">
+          <section className="py-4 px-0">
             <div className="row">
-              <div className="col-lg-8 col-md-8 mt-2">
-                <h4>Contatti</h4>
-                <p>
-                  <strong>Nome Ente</strong>
-                  Via Roma 0 - 00000 Città - Codice fiscale / P. IVA: 000000000
-                </p>
-                <div className="link-list-wrapper">
-                  <ul className="footer-list link-list clearfix">
-                    <li><a className="list-item" href="#">Posta Elettronica Certificata</a></li>
-                    <li>
-                      <a className="list-item" href="#">URP - Ufficio Relazioni con il Pubblico</a>
-                    </li>
-                  </ul>
-                </div>
+              <div className="col-12 ">
+                <p className="h4 pb-4">Community</p>
+                <ul className="list-inline mb-0 d-flex flex-column flex-md-row">
+
+                  <li className="list-inline-item me-4 mb-2">
+                    <a href="https://forum.italia.it/" className="list-item left-icon d-inline-flex align-items-center" target="_blank" rel="noreferrer" aria-label="Apre in un nuovo tab">
+                      <span>Forum Italia</span>
+                      <svg className="ms-2 icon icon-sm icon-white" aria-hidden="true">
+                        <use fill="#fff" href="/sprites.svg#it-external-link" xlinkHref="/sprites.svg#it-external-link"></use>
+                      </svg>
+                      <span className="visually-hidden">Apre in un nuovo tab</span>
+                    </a>
+
+                  </li>
+                  <li className="list-inline-item me-4 mb-2">
+                    <a href="https://slack.developers.italia.it/" className="list-item left-icon d-inline-flex align-items-center" target="_blank" rel="noreferrer" aria-label="Apre in un nuovo tab">
+                      <span>Slack</span>
+                      <svg className="ms-2 icon icon-sm icon-white" aria-hidden="true">
+                        <use fill="#fff" href="/sprites.svg#it-external-link" xlinkHref="/sprites.svg#it-external-link"></use>
+                      </svg>
+                      <span className="visually-hidden">Apre in un nuovo tab</span>
+                    </a>
+                  </li><li className="list-inline-item me-4 mb-2">
+                    <a href="https://github.com/italia" className="list-item left-icon d-inline-flex align-items-center" target="_blank" rel="noreferrer" aria-label="Apre in un nuovo tab">
+                      <span>Github</span>
+                      <svg className="ms-2 icon icon-sm icon-white" aria-hidden="true">
+                        <use fill="#fff" href="/sprites.svg#it-external-link" xlinkHref="/sprites.svg#it-external-link"></use>
+                      </svg>
+                      <span className="visually-hidden">Apre in un nuovo tab</span>
+                    </a>
+                  </li>
+                  <li className="d-none d-lg-block border-end border-white ms-2 me-4" style={{ height: "24px", alignSelf: "center" }}></li>
+                  <li className="d-lg-none d-block border-bottom border-white mx-2 my-3 my-lg-0" style={{ width: "100%", alignSelf: "center" }}></li>
+                  <li className="list-inline-item me-4 mb-2">
+                    <a href="https://innovazione.gov.it" target="_blank" rel="noopener noreferrer" className="d-inline-flex align-items-center gap-2">
+                      <span>innovazione.gov</span>
+                      <svg className="icon icon-sm icon-white" aria-hidden="true">
+                        <use fill="#fff" href="/sprites.svg#it-external-link" xlinkHref="/sprites.svg#it-external-link"></use>
+                      </svg>
+                      <span className="visually-hidden">Apre in un nuovo tab</span>
+                    </a>
+                  </li>
+                </ul>
               </div>
-              <div className="col-lg-4 col-md-4 mt-2">
-                <div className="pb-2">
-                  <h4>Seguici su</h4>
-                  <ul className="list-inline text-left social">
-                    <li className="list-inline-item">
-                      <a className="p-2 text-white" href="#"><svg className="icon icon-sm icon-inverse align-top"><use href="/sprites.svg#it-designers-italia"></use></svg><span className="visually-hidden">Designers Italia (link esterno)</span></a>
-                    </li>
-                    <li className="list-inline-item">
-                      <a className="p-2 text-white" href="#"><svg className="icon icon-sm icon-inverse align-top"><use href="/sprites.svg#it-twitter"></use></svg><span className="visually-hidden">X (link esterno)</span></a>
-                    </li>
-                    <li className="list-inline-item">
-                      <a className="p-2 text-white" href="#"><svg className="icon icon-sm icon-inverse align-top"><use href="/sprites.svg#it-medium"></use></svg><span className="visually-hidden">Medium (link esterno)</span></a>
-                    </li>
-                    <li className="list-inline-item">
-                      <a className="p-2 text-white" href="#"><svg className="icon icon-sm icon-inverse align-top"><use href="/sprites.svg#it-behance"></use></svg><span className="visually-hidden">Behance (link esterno)</span></a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              {/* <div className="col-lg-4 col-md-4 mt-2">
-                <h4>Newsletter</h4>
-                <div className="form-group d-flex gap-1">
-                  <input type="text" className="form-control form-control-sm" id="exampleFormGroup2" placeholder="Inserisci la tua email" aria-label="Inserisci la tua email" />
-                  <button type="submit" className="btn btn-primary">Iscriviti</button>
-                </div>
-              </div> */}
             </div>
           </section>
         </div>
-      </div>
+      </div >
+
       <div className="it-footer-small-prints clearfix">
         <div className="container">
-          <h3 className="visually-hidden">Sezione Link Utili</h3>
-          <ul className="it-footer-small-prints-list list-inline mb-0 d-flex flex-column flex-md-row">
-            <li className="list-inline-item"><a href="#">Media policy</a></li>
-            <li className="list-inline-item"><a href="#">Note legali</a></li>
-            <li className="list-inline-item"><a href="#">Privacy policy</a></li>
-            <li className="list-inline-item"><a href="#">Mappa del sito</a></li>
-            <li className="list-inline-item"><a href="https://form.agid.gov.it/view/xyz">Dichiarazione di accessibilità <span className="visually-hidden">(link esterno su sito AgID)</span></a></li>
+          <p className="visually-hidden">Sezione link utili</p>
+          <ul className="it-footer-small-prints-list list-inline mb-0 d-flex flex-column flex-md-row px-0">
+            {/*
+            <li className="list-inline-item d-flex align-items-center gap-2">
+              <a href="/it/privacy-policy" target="_blank" rel="noopener noreferrer" className="d-inline-flex align-items-center gap-2">
+                <span>Privacy policy</span>   </a>
+            </li>
+            <li className="list-inline-item d-flex align-items-center gap-2">
+              <a href="/it/note-legali" target="_blank" rel="noopener noreferrer" className="d-inline-flex align-items-center gap-2">
+                <span>Note legali</span>   </a>
+            </li>
+            <li className="list-inline-item d-flex align-items-center gap-2">
+              <a href=" https://form.agid.gov.it/PCM/Risultati_PNRR/dichiarazione" target="_blank" rel="noopener noreferrer" className="d-inline-flex align-items-center gap-2">
+                <span>Dichiarazione di accessibilità</span>  <svg className="icon icon-sm icon-white" aria-hidden="true">  <use href="/sprites.svg#it-external-link" xlink:href="/sprites.svg#it-external-link"></use>
+                </svg>
+                <span className="visually-hidden">Apre in un nuovo tab</span>   </a>
+            </li> */}
           </ul>
         </div>
       </div>
     </footer>
-
-  </div>)
+  </div >)
 }

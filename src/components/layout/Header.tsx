@@ -7,45 +7,13 @@ export default function () {
           <div className="row">
             <div className="col-12">
               <div className="it-header-slim-wrapper-content">
-                <a className="d-none d-lg-block navbar-brand" href="#">Ente appartenenza</a>
-                <div className="nav-mobile">
-                  <nav aria-label="Navigazione secondaria">
-                    <a className="it-opener d-lg-none" data-bs-toggle="collapse" href="#menuC1" role="button" aria-expanded="false" aria-controls="menuC1">
-                      <span>Ente appartenenza</span>
-                      <svg className="icon" aria-hidden="true"><use href="/sprites.svg#it-expand"></use></svg>
-                    </a>
-                    {/* <div className="link-list-wrapper collapse" id="menuC1">
-                      <ul className="link-list">
-                        <li><a className="dropdown-item list-item" href="#">Link 1</a></li>
-                        <li><a className="list-item active" href="#" aria-current="page">Link 2 (Attivo)</a></li>
-                      </ul>
-                    </div> */}
-                  </nav>
+                <div className="navbar-brand" >
+                  <a className="navbar-brand" href="https://innovazione.gov.it/dipartimento/" target="_blank" rel="noopener">Dipartimento per la trasformazione digitale<span className="visually-hidden"> Apre in un nuovo tab</span></a>
+                  <span className="mx-2" aria-hidden="true">+</span>
+                  <a className="navbar-brand" href="https://www.agid.gov.it/it" target="_blank" rel="noopener"> Agenzia per l'Italia digitale <span className="visually-hidden"> Apre in un nuovo tab</span> </a>
                 </div>
-                <div className="it-header-slim-right-zone">
-                  {/* <div className="nav-item dropdown">
-                    <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      <span className="visually-hidden">Selezione lingua: lingua selezionata</span>
-                      <span>ITA</span>
-                      <svg className="icon d-none d-lg-block"><use href="/sprites.svg#it-expand"></use></svg>
-                    </a>
-                    <div className="dropdown-menu">
-                      <div className="row">
-                        <div className="col-12">
-                          <div className="link-list-wrapper">
-                            <ul className="link-list">
-                              <li><a className="dropdown-item list-item" href="#"><span>ITA <span className="visually-hidden">selezionata</span></span></a></li>
-                              <li><a className="dropdown-item list-item" href="#"><span>ENG</span></a></li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="it-access-top-wrapper">
-                    <a className="btn btn-primary btn-sm" href="#">Accedi</a>
-                  </div> */}
-                </div>
+
+                <div className="it-header-slim-right-zone" />
               </div>
             </div>
           </div>
@@ -58,42 +26,14 @@ export default function () {
               <div className="col-12">
                 <div className="it-header-center-content-wrapper">
                   <div className="it-brand-wrapper">
-                    <a href="#">
-                      <svg className="icon" aria-hidden="true"><use href="/sprites.svg#it-pa"></use></svg>
+                    <a href="/">
+                      <img src="/logo-dtd-white.svg" alt="" className="it-brand-logo" height="50" />
                       <div className="it-brand-text">
                         <h1 className="it-brand-title">Catalogo del software</h1>
-                        <div className="it-brand-tagline d-none d-md-block">Tutto il catalogo</div>
                       </div>
                     </a>
                   </div>
-                  <div className="it-right-zone">
-                    <div className="it-socials d-none d-md-flex">
-                      <span>Seguici su</span>
-                      <ul>
-                        <li>
-                          <a href="#" aria-label="Facebook" target="_blank">
-                            <svg className="icon"><use href="/sprites.svg#it-facebook"></use></svg>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#" aria-label="Github" target="_blank">
-                            <svg className="icon"><use href="/sprites.svg#it-github"></use></svg>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#" aria-label="Twitter" target="_blank">
-                            <svg className="icon"><use href="/sprites.svg#it-twitter"></use></svg>
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                    {/* <div className="it-search-wrapper">
-                      <span className="d-none d-md-block">Cerca</span>
-                      <a className="search-link rounded-icon" aria-label="Cerca nel sito" href="#">
-                        <svg className="icon"><use href="/sprites.svg#it-search"></use></svg>
-                      </a>
-                    </div> */}
-                  </div>
+                  <div className="it-right-zone" />
                 </div>
               </div>
             </div>

@@ -1,3 +1,12 @@
-@use 'bootstrap-italia/src/scss/bootstrap-italia.scss';
-@use './styles/details';
-@use './styles/fonts';
+@use "bootstrap-italia/src/scss/bootstrap-italia.scss";
+@use "./styles/details";
+@use "./styles/fonts";
+
+.it-brand-logo {
+  height: 3.8rem;
+  width: auto;
+  margin-right: 1rem;
+  transition:
+    height 0.2s ease,
+    margin 0.2s ease;
+}
