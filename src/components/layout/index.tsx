@@ -8,8 +8,8 @@ export default function Layout(props: React.PropsWithChildren) {
   return (
     <>
       <Seo />
-      <Header />
       <Banner />
+      <Header />
       <main>{props?.children}</main>
       <Footer />
     </>
