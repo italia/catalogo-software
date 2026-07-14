@@ -5,7 +5,7 @@ export default function () {
         <div className="container">
           <div className="row">
             <div className="col-12 text-center text-md-start">
-              <div className="small mb-4"><p>Il Dipartimento per la trasformazione digitale coordina l'attuazione delle misure digitali del PNRR, finanziato dall'Unione europea (NextGenerationEU)</p>
+              <div className="small mb-4"><p>Il catalogo è messo a disposizione da <strong>Developers Italia</strong>, un progetto di</p>
               </div>
             </div>
           </div>
@@ -13,12 +13,11 @@ export default function () {
             <div className="col-12">
               <ul className="logos list-unstyled d-flex flex-column flex-md-row flex-wrap align-items-center mb-0">
                 <li className="mb-4 me-md-5">
-                  <a href="https://commission.europa.eu/index_it" target="_blank" rel="noreferrer" className="d-block h6 fw-semibold text-decoration-none d-flex align-items-center">
-                    <img src="/assets/logo/logo_finanziato_nextgeneu-05.svg" title="" alt="Apre in un nuovo tab" sizes="(max-width: 480px) 466px, (max-width: 1024px) 720px, 928px" loading="lazy" decoding="async" fetchPriority="auto" width="275" height="40" />
+                  <a href="https://innovazione.gov.it/dipartimento/" target="_blank" rel="noreferrer" className="d-block h6 fw-semibold text-decoration-none d-flex align-items-center"> <img src="/assets/logo/dtd.svg" title="" alt="null - Apre in un nuovo tab" sizes="(max-width: 480px) 466px, (max-width: 1024px) 720px, 928px" loading="lazy" decoding="async" fetchPriority="auto" width="275" height="40" />
                   </a>
-                </li><li className="mb-4 me-md-5">
-                  <a href="https://innovazione.gov.it/dipartimento/" target="_blank" rel="noreferrer" className="d-block h6 fw-semibold text-decoration-none d-flex align-items-center">
-                    <img src="/assets/logo/dtd.svg" title="" alt="Apre in un nuovo tab" sizes="(max-width: 480px) 466px, (max-width: 1024px) 720px, 928px" loading="lazy" decoding="async" fetchPriority="auto" width="275" height="40" />
+                </li>
+                <li className="mb-4 me-md-5">
+                  <a href="https://www.agid.gov.it/it" target="_blank" rel="noreferrer" className="d-block h6 fw-semibold text-decoration-none d-flex align-items-center"> <img src="/assets/logo/agid-logo-4.svg" title="" alt="AGID agenzia italiana per il digitale - Apre in un nuovo tab" sizes="(max-width: 480px) 466px, (max-width: 1024px) 720px, 928px" loading="lazy" decoding="async" fetchPriority="auto" width="275" height="44" />
                   </a>
                 </li>
               </ul>
@@ -71,8 +70,8 @@ export default function () {
                   <li className="d-none d-lg-block border-end border-white ms-2 me-4" style={{ height: "24px", alignSelf: "center" }}></li>
                   <li className="d-lg-none d-block border-bottom border-white mx-2 my-3 my-lg-0" style={{ width: "100%", alignSelf: "center" }}></li>
                   <li className="list-inline-item me-4 mb-2">
-                    <a href="https://innovazione.gov.it" target="_blank" rel="noopener noreferrer" className="d-inline-flex align-items-center gap-2">
-                      <span>innovazione.gov</span>
+                    <a href="https://developers.italia.it/community" target="_blank" rel="noopener noreferrer" className="d-inline-flex align-items-center gap-2">
+                      <span>developers.italia.it</span>
                       <svg className="icon icon-sm icon-white" aria-hidden="true">
                         <use fill="#fff" href="/sprites.svg#it-external-link" xlinkHref="/sprites.svg#it-external-link"></use>
                       </svg>

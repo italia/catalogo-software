@@ -27,9 +27,11 @@ export default function () {
                 <div className="it-header-center-content-wrapper">
                   <div className="it-brand-wrapper">
                     <a href="/">
-                      <img src="/logo-dtd-white.svg" alt="" className="it-brand-logo" height="50" />
+                      <img src="/assets/logo/header-it-logo-white.svg" alt="" className="it-brand-logo" />
+                      {/* <span class="dynamic-icon icon text-primary" style={{ "--icon-url": url('/assets/logo/it-logo-white.svg') }}></span> */}
                       <div className="it-brand-text">
                         <h1 className="it-brand-title">Catalogo del software</h1>
+                        <div className="it-brand-tagline d-none d-md-block">Il Catalogo del software a riuso e open source della Pubblica Amministrazione</div>
                       </div>
                     </a>
                   </div>
