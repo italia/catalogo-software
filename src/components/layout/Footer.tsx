@@ -14,11 +14,11 @@ export default function () {
               <ul className="logos list-unstyled d-flex flex-column flex-md-row flex-wrap align-items-center mb-0">
                 <li className="mb-4 me-md-5">
                   <a href="https://commission.europa.eu/index_it" target="_blank" rel="noreferrer" className="d-block h6 fw-semibold text-decoration-none d-flex align-items-center">
-                    <img src="/assets/logo/logo_finanziato_nextgeneu-05.svg" title="" alt="Apre in un nuovo tab" sizes="(max-width: 480px) 466px, (max-width: 1024px) 720px, 928px" loading="lazy" decoding="async" fetchpriority="auto" width="275" height="40" />
+                    <img src="/assets/logo/logo_finanziato_nextgeneu-05.svg" title="" alt="Apre in un nuovo tab" sizes="(max-width: 480px) 466px, (max-width: 1024px) 720px, 928px" loading="lazy" decoding="async" fetchPriority="auto" width="275" height="40" />
                   </a>
                 </li><li className="mb-4 me-md-5">
                   <a href="https://innovazione.gov.it/dipartimento/" target="_blank" rel="noreferrer" className="d-block h6 fw-semibold text-decoration-none d-flex align-items-center">
-                    <img src="/assets/logo/dtd.svg" title="" alt="Apre in un nuovo tab" sizes="(max-width: 480px) 466px, (max-width: 1024px) 720px, 928px" loading="lazy" decoding="async" fetchpriority="auto" width="275" height="40" />
+                    <img src="/assets/logo/dtd.svg" title="" alt="Apre in un nuovo tab" sizes="(max-width: 480px) 466px, (max-width: 1024px) 720px, 928px" loading="lazy" decoding="async" fetchPriority="auto" width="275" height="40" />
                   </a>
                 </li>
               </ul>
