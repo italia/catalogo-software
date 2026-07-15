@@ -10,7 +10,7 @@ export default function Layout(props: React.PropsWithChildren) {
       <Seo />
       <Banner />
       <Header />
-      <main>{props?.children}</main>
+      {props?.children}
       <Footer />
     </>
   )
