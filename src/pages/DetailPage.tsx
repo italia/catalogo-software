@@ -225,14 +225,14 @@ export function DetailPage() {
     <Layout>
       {/* ── scoped styles ──────────────────────────────────────────────── */}
 
-      <main className="container" style={{ marginTop: '2.5rem', marginBottom: '6rem' }} data-testid="catalogue-container">
+      <main className="container swdetail" style={{ marginTop: '2.5rem', marginBottom: '6rem' }} data-testid="catalogue-container">
 
         {/* back */}
         <Link to="/" className="di-back-link">
           <svg className="icon icon-sm icon-primary me-2"><use href="/sprites.svg#it-arrow-left"></use></svg> {labels.software.back_to_catalogue}
         </Link>
 
-        <div className="row">
+        <div className="row flex-xs-row-reverse">
           {/* ── LEFT ───────────────────────────────────────────────────── */}
           <aside className="col-12 col-lg-3">
             {/* logo */}
@@ -320,7 +320,7 @@ export function DetailPage() {
               )}
 
               {devStatus && (
-                <div className="chip chip-success">
+                <div className="chip chip-success mb-4">
                   <span className="chip-label">
                     {labels.software.development_status}:{' '}
                     {developmentStatusLabels[devStatus] ?? devStatus}

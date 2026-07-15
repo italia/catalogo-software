@@ -28,13 +28,7 @@ export default function () {
 
       <div className="it-footer-main" id="footer">
         <div className="container">
-          <section className="px-0">
-            <div className="row">
-              <div className="col-12 py-4">  <ul className="it-footer-small-prints-list list-inline mb-0 d-flex flex-wrap flex-md-row">  </ul>
-              </div>
-            </div>
-          </section>
-          <section className="py-4 px-0">
+          <section>
             <div className="row">
               <div className="col-12 ">
                 <p className="h4 pb-4">Community</p>
