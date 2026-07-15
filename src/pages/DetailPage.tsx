@@ -232,9 +232,9 @@ export function DetailPage() {
           <svg className="icon icon-sm icon-primary me-2"><use href="/sprites.svg#it-arrow-left"></use></svg> {labels.software.back_to_catalogue}
         </Link>
 
-        <div className="di-layout">
+        <div className="row">
           {/* ── LEFT ───────────────────────────────────────────────────── */}
-          <aside className="di-left">
+          <aside className="col-12 col-lg-3">
             {/* logo */}
             <div className="di-logo-card">
               <ImageWithPlaceholder placeholder={fallback} alt={'Logo ' + name} img={logo} />
@@ -287,7 +287,7 @@ export function DetailPage() {
           </aside>
 
           {/* ── RIGHT ──────────────────────────────────────────────────── */}
-          <main className="di-right">
+          <main className="col-12 col-lg-9">
             {/* hero */}
             <div>
               {/* category chips */}
