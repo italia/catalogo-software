@@ -187,7 +187,7 @@ export async function fetchSoftwareBySlug(slug: string): Promise<SoftwareDetail 
     bool: {
       must: [
         { term: { type: 'software' } },
-        { term: { 'slug.keyword': slug } },
+        { term: { 'slug': slug } },
       ],
     },
   };
@@ -228,9 +228,9 @@ function getSoftwareCategory(source: Record<string, unknown>): string {
   const ipaCode =
     (pc?.organisation as Record<string, unknown>)?.uri ||
     (pc?.IT as Record<string, unknown>)?.riuso &&
-      ((pc?.IT as Record<string, unknown>)?.riuso as Record<string, unknown>)?.codiceIPA ||
+    ((pc?.IT as Record<string, unknown>)?.riuso as Record<string, unknown>)?.codiceIPA ||
     (pc?.it as Record<string, unknown>)?.riuso &&
-      ((pc?.it as Record<string, unknown>)?.riuso as Record<string, unknown>)?.codiceIPA;
+    ((pc?.it as Record<string, unknown>)?.riuso as Record<string, unknown>)?.codiceIPA;
   return ipaCode ? SOFTWARE_REUSE : SOFTWARE_OPEN;
 }
 
