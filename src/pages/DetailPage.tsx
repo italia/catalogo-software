@@ -119,9 +119,9 @@ interface MetaRowProps {
 }
 function MetaRow({ label, value }: MetaRowProps) {
   return (
-    <div className="di-meta-row">
-      <dt className="di-meta-row__label">{label}</dt>
-      <dd className="di-meta-row__value">{value}</dd>
+    <div className="di-meta-row row">
+      <dt className="di-meta-row__label col-12 col-md-6">{label}</dt>
+      <dd className="di-meta-row__value col-12 col-md-6">{value}</dd>
     </div>
   );
 }

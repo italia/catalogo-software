@@ -146,21 +146,16 @@
     padding: .25rem 0;
 }
 .di-meta-row {
-    display: flex;
-    gap: .5rem;
     padding: .6rem 1.25rem;
     border-bottom: 1px solid var(--di-border);
 }
 .di-meta-row:last-child { border-bottom: none; }
 .di-meta-row__label {
-    width: 180px;
-    flex-shrink: 0;
     color: var(--di-muted);
 }
 .di-meta-row__value {
     color: var(--di-text);
     margin: 0;
-    flex: 1;
 }
 
 .swdetail section { margin-bottom: 2rem; }
