@@ -116,12 +116,13 @@ function ActionLink({ href, icon, label }: ActionLinkProps) {
 interface MetaRowProps {
   label: string;
   value: React.ReactNode;
+  ddClasses?: string;
 }
-function MetaRow({ label, value }: MetaRowProps) {
+function MetaRow({ label, value, ddClasses }: MetaRowProps) {
   return (
     <div className="di-meta-row row">
       <dt className="di-meta-row__label col-12 col-md-6">{label}</dt>
-      <dd className="di-meta-row__value col-12 col-md-6">{value}</dd>
+      <dd className={`di-meta-row__value col-12 col-md-6 ${ddClasses || ''}`}>{value}</dd>
     </div>
   );
 }
@@ -360,7 +361,7 @@ export function DetailPage() {
                   <MetaRow
                     label={labels.software.categories}
                     value={
-                      <div>
+                      <div className="categories mt-2 mt-md-0">
                         {(categories ?? []).map((cat) => (
                           <div className="chip chip-primary">
                             <span key={cat} className="chip-label">{categoryLabels[cat] ?? cat}</span>
@@ -411,6 +412,7 @@ export function DetailPage() {
                 )}
                 {enablingPlatforms.length > 0 && (
                   <MetaRow
+                    ddClasses="mt-2 mt-md-0"
                     label={labels.software.enabling_platforms}
                     value=
                         {enablingPlatforms.map((p) => (
