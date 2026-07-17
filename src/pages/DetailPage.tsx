@@ -291,17 +291,6 @@ export function DetailPage() {
           <main className="col-12 col-lg-9">
             {/* hero */}
             <div>
-              {/* category chips */}
-              {/* {categories && categories.length > 0 && (
-                <div className="mb-1">
-                  {categories.map((cat, i) => (
-                    <div className="chip chip-primary" key={cat}>
-                      <span className="chip-label text-uppercase">{categoryLabels[cat] ?? cat}</span>
-                    </div>
-                  ))}
-                </div>
-              )} */}
-
               <h1>
                 {name}&nbsp;
                 {softwareVersion && (
@@ -348,9 +337,6 @@ export function DetailPage() {
             {usedBy && usedBy.length > 0 && (
               <UsedBySection usedBy={usedBy} labels={labels} />
             )}
-
-            {/* categories as badges (secondary display after hero) */}
-
 
             {/* detail info panel */}
             <section className="di-info-panel">
@@ -412,7 +398,7 @@ export function DetailPage() {
                 )}
                 {enablingPlatforms.length > 0 && (
                   <MetaRow
-                    ddClasses="mt-2 mt-md-0"
+                    ddClasses="categories mt-2 mt-md-0"
                     label={labels.software.enabling_platforms}
                     value=
                         {enablingPlatforms.map((p) => (
@@ -425,13 +411,14 @@ export function DetailPage() {
                 {(complianceItems.length > 0 || conformita !== undefined) && (
                   <MetaRow
                     label={labels.software.compliance}
+                    ddClasses="mt-2 mt-md-0"
                     value={
                       complianceItems.length > 0 ? (
-                        <div className="chip chip-primary">
-                          {complianceItems.map((c) => (
-                            <span key={c} className="chip-label">{c}</span>
+                        <ul className="it-list">
+                          {complianceItems.map((c, index) => (
+                            <li key={c} className="text-primary">{c}</li>
                           ))}
-                        </div>
+                        </ul>
                       ) : 'Nessuna'
                     }
                   />
