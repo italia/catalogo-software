@@ -310,7 +310,7 @@ export function DetailPage() {
               )}
 
               {devStatus && (
-                <div className="chip chip-success mb-4">
+                <div className={`chip ${devStatus === 'stable' ? 'chip-success' : 'chip-danger'} mb-4`}>
                   <span className="chip-label">
                     {labels.software.development_status}:{' '}
                     {developmentStatusLabels[devStatus] ?? devStatus}
