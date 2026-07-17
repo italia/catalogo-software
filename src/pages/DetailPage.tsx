@@ -292,7 +292,7 @@ export function DetailPage() {
             {/* hero */}
             <div>
               {/* category chips */}
-              {categories && categories.length > 0 && (
+              {/* {categories && categories.length > 0 && (
                 <div className="mb-1">
                   {categories.map((cat, i) => (
                     <div className="chip chip-primary" key={cat}>
@@ -300,7 +300,7 @@ export function DetailPage() {
                     </div>
                   ))}
                 </div>
-              )}
+              )} */}
 
               <h1>
                 {name}&nbsp;
