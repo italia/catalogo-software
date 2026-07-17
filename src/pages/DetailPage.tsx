@@ -232,7 +232,7 @@ export function DetailPage() {
           <svg className="icon icon-sm icon-primary me-2"><use href="/sprites.svg#it-arrow-left"></use></svg> {labels.software.back_to_catalogue}
         </Link>
 
-        <div className="row flex-xs-row-reverse">
+        <div className="row flex-column-reverse flex-lg-row">
           {/* ── LEFT ───────────────────────────────────────────────────── */}
           <aside className="col-12 col-lg-3">
             {/* logo */}
