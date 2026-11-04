@@ -15,10 +15,18 @@ const ES_URL = import.meta.env.VITE_ELASTICSEARCH_URL as string;
 const USE_MOCK = import.meta.env.VITE_USE_MOCK === 'true';
 const preference = Date.now();
 
-async function executeQuery(query: object, sort: object, from: number, size: number) {
+async function executeQuery(
+  query: object,
+  sort: object,
+  from: number,
+  size: number,
+  mockSearchValue = ''
+) {
   if (USE_MOCK) {
     await new Promise((r) => setTimeout(r, 300));
-    const allHits = mockResponse.hits.hits as Array<{ _id: string; _source: Record<string, unknown> }>;
+    const allHits = (
+      mockResponse.hits.hits as Array<{ _id: string; _source: Record<string, unknown> }>
+    ).filter((hit) => mockHitMatches(hit._source, mockSearchValue));
     const sliced = allHits.slice(from, from + size);
     return {
       hits: sliced,
@@ -114,11 +122,59 @@ function buildSort(sortBy: string) {
 function buildSearchFields() {
   return [
     'publiccode.name^3',
-    `publiccode.description.${LANG}.localizedName^3`,
+    `publiccode.description.${LANG}.localisedName^3`,
+    `publiccode.description.${LANG}.genericName^2`,
     `publiccode.description.${LANG}.shortDescription^2`,
     `publiccode.description.${LANG}.longDescription`,
     `publiccode.description.${LANG}.features`,
   ];
+}
+
+// Matches software whose name, description or features contain every word of
+// the query, in any order and spread across fields (e.g. "sito comune" finds
+// "Sito web comunale ... il sito web di un comune"). Exact phrase / prefix
+// matches are still kept and boosted, so search-as-you-type and name searches
+// keep ranking first.
+function buildSearchQuery(searchValue: string) {
+  const fields = buildSearchFields();
+  return {
+    bool: {
+      should: [
+        { multi_match: { query: searchValue, type: 'phrase_prefix', fields, boost: 3 } },
+        { multi_match: { query: searchValue, type: 'cross_fields', operator: 'and', fields } },
+        { multi_match: { query: searchValue, type: 'bool_prefix', operator: 'and', fields } },
+      ],
+      minimum_should_match: 1,
+    },
+  };
+}
+
+function normalize(value: string) {
+  return value
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+}
+
+// Client-side equivalent of buildSearchQuery, used only with VITE_USE_MOCK.
+function mockHitMatches(source: Record<string, unknown>, searchValue: string) {
+  const words = normalize(searchValue).split(/\s+/).filter(Boolean);
+  if (words.length === 0) return true;
+  const pc = source.publiccode as Record<string, unknown> | undefined;
+  const desc = getDescriptionField(source);
+  const text = normalize(
+    [
+      pc?.name,
+      desc?.localisedName,
+      desc?.genericName,
+      desc?.shortDescription,
+      desc?.longDescription,
+      ...((desc?.features as unknown[]) ?? []),
+    ]
+      .filter((v) => typeof v === 'string')
+      .join(' ')
+  );
+  return words.every((w) => text.includes(w));
 }
 
 export async function searchCatalogue(
@@ -134,13 +190,7 @@ export async function searchCatalogue(
   const must_not: object[] = [];
 
   if (searchValue) {
-    must.push({
-      multi_match: {
-        query: searchValue,
-        type: 'phrase_prefix',
-        fields: buildSearchFields(),
-      },
-    });
+    must.push(buildSearchQuery(searchValue));
   }
 
   if (type === SOFTWARE_REUSE) {
@@ -169,7 +219,7 @@ export async function searchCatalogue(
     },
   };
 
-  const { hits, total } = await executeQuery(query, buildSort(sortBy), from, size);
+  const { hits, total } = await executeQuery(query, buildSort(sortBy), from, size, searchValue);
   return { items: hits.map(mapHitToItem), total };
 }
 
