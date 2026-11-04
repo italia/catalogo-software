@@ -22,7 +22,7 @@ export function SearchBar({ defaultValue, placeholder, onChange }: SearchBarProp
 
   return (
     <div className="form-group">     
-      <label htmlFor="main-search">Nome del software</label> 
+      <label htmlFor="main-search">Nome, parole chiave o descrizione</label> 
       <div className="input-group">
         <span className="input-group-text">
           <svg className="icon icon-sm icon-secondary" aria-hidden="true">
